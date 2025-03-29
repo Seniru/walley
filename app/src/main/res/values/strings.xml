@@ -7,4 +7,11 @@
     <string name="balance">Available balance</string>
     <string name="monthly_budget">Monthly Budget</string>
     <string name="today">Today</string>
+    <string name="current_month">This month</string>
+    <string name="total_income">Total income</string>
+    <string name="total_expenses">Total expenses</string>
+    <string name="cost_breakdown">Monthly cost breakdown</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="last_30_days">Last 30 days</string>
 </resources>
