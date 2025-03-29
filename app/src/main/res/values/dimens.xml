@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="small_text">12sp</dimen>
+    <dimen name="normal_text">14sp</dimen>
+    <dimen name="secondary_heading">18sp</dimen>
+    <dimen name="primary_heading">22sp</dimen>
+</resources>
