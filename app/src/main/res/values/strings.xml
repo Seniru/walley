@@ -23,4 +23,14 @@
     <string name="backups">Backups</string>
     <string name="export_data">Export my data</string>
     <string name="import_data">Import my data with a file</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="type">Type</string>
+    <string name="title">Title</string>
+    <string name="category">Category</string>
+    <string name="amount">Amount</string>
+    <string name="select_date">Select the date</string>
+    <string-array name="transaction_types">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
 </resources>
