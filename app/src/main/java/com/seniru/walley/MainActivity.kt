@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var currentScreen = 0
     private val screens = arrayOf(
         arrayOf(R.id.diary_button, DiaryFragment::class.java),
-        arrayOf(R.id.categories_button, DiaryFragment::class.java),
+        arrayOf(R.id.categories_button, CategoryFragment::class.java),
         arrayOf(R.id.report_button, ReportFragment::class.java),
         arrayOf(R.id.settings_button, DiaryFragment::class.java),
     )

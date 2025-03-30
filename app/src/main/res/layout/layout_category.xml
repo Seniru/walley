@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/categories"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/primary_heading"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/accent"
+            android:text="@string/create_category"
+            android:textColor="@color/background"
+            android:textSize="@dimen/normal_text"
+            app:cornerRadius="@dimen/button_radius" />
+    </LinearLayout>
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Food"
+        app:useIcon="\uf805"
+        app:value="80"
+        app:maxValue="120"
+        app:color="#FF0000" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Transport"
+        app:useIcon="\uf207"
+        app:value="40"
+        app:maxValue="80"
+        app:color="#FF9800" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Entertainment"
+        app:useIcon="\uf008"
+        app:value="60"
+        app:maxValue="150"
+        app:color="#4CAF50" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Shopping"
+        app:useIcon="\uf07a"
+        app:value="30"
+        app:maxValue="200"
+        app:color="#2196F3" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Health"
+        app:useIcon="\uf21e"
+        app:value="50"
+        app:maxValue="100"
+        app:color="#9C27B0" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Education"
+        app:useIcon="\uf19d"
+        app:value="95"
+        app:maxValue="90"
+        app:color="#03A9F4" />
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Bills"
+        app:useIcon="\uf571"
+        app:value="20"
+        app:maxValue="50"
+        app:color="#607D8B" />
+
+
+
+    <com.seniru.walley.ui.CategoryView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Gifts"
+        app:useIcon="\uf06b"
+        app:value="10"
+        app:maxValue="30"
+        app:color="#E91E63" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="75dp" />
+
+</LinearLayout>

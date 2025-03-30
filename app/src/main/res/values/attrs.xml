@@ -5,6 +5,7 @@
         <attr name="type" format="string" />
         <attr name="time" format="string" />
         <attr name="value" format="string" />
+        <attr name="maxValue" format="string" />
         <attr name="useIcon" format="string" />
         <attr name="color" format="color" />
     </declare-styleable>

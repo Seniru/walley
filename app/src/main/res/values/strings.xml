@@ -11,7 +11,8 @@
     <string name="total_income">Total income</string>
     <string name="total_expenses">Total expenses</string>
     <string name="cost_breakdown">Monthly cost breakdown</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="last_30_days">Last 30 days</string>
+    <string name="create_category">Create category</string>
+    <string name="budget_vs_expenses">%1$s spent of %2$s limit</string>
+    <string name="percent">(%.2f%%)</string>
 </resources>
