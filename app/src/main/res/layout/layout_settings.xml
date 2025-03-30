@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/primary_heading"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/preferred_currency"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/secondary_heading"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/currency_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundTint="@color/textPrimary"
+        android:spinnerMode="dialog" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/monthly_budget"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/secondary_heading"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextNumberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notifications"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/secondary_heading"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:saveEnabled="false"
+        android:text="@string/send_notifications"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/normal_text"
+        android:theme="@style/Theme.AppTheme" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/budget_limit_alerts"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/normal_text"
+        android:theme="@style/Theme.AppTheme" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_reminders"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/normal_text"
+        android:theme="@style/Theme.AppTheme" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/backups"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/secondary_heading"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent"
+        android:text="@string/export_data"
+        android:textColor="@color/background"
+        android:textSize="@dimen/normal_text"
+        app:cornerRadius="@dimen/button_radius" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent"
+        android:text="@string/import_data"
+        android:textColor="@color/background"
+        android:textSize="@dimen/normal_text"
+        app:cornerRadius="@dimen/button_radius" />
+
+</LinearLayout>

@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         arrayOf(R.id.diary_button, DiaryFragment::class.java),
         arrayOf(R.id.categories_button, CategoryFragment::class.java),
         arrayOf(R.id.report_button, ReportFragment::class.java),
-        arrayOf(R.id.settings_button, DiaryFragment::class.java),
+        arrayOf(R.id.settings_button, SettingsFragment::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

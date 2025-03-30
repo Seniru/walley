@@ -15,4 +15,12 @@
     <string name="create_category">Create category</string>
     <string name="budget_vs_expenses">%1$s spent of %2$s limit</string>
     <string name="percent">(%.2f%%)</string>
+    <string name="preferred_currency">Preferred Currency</string>
+    <string name="notifications">Notifications</string>
+    <string name="send_notifications">Allow push notifications</string>
+    <string name="budget_limit_alerts">Send alerts when budget limit is exceeded</string>
+    <string name="daily_reminders">Daily reminders</string>
+    <string name="backups">Backups</string>
+    <string name="export_data">Export my data</string>
+    <string name="import_data">Import my data with a file</string>
 </resources>
