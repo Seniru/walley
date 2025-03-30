@@ -29,6 +29,11 @@
     <string name="category">Category</string>
     <string name="amount">Amount</string>
     <string name="select_date">Select the date</string>
+    <string name="new_category">New category</string>
+    <string name="category_name">Category name</string>
+    <string name="spending_limit">Spending limit</string>
+    <string name="color">Color</string>
+    <string name="icon">Icon</string>
     <string-array name="transaction_types">
         <item>Income</item>
         <item>Expense</item>
