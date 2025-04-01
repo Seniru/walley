@@ -39,6 +39,8 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
                 id: Long
             ) {
                 val currencyISO = currencyList[position].subSequence(0, 3).toString()
+                // do not update if no changes were made to the previous state
+                if (currencyISO == preferences.getCurrency().currencyCode) return
                 preferences.setCurrency(currencyISO)
             }
 

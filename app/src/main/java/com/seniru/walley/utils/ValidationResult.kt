@@ -1,4 +1,4 @@
-package com.seniru.walley.models
+package com.seniru.walley.utils
 
 sealed class ValidationResult {
     data class Empty(val error: String) : ValidationResult()

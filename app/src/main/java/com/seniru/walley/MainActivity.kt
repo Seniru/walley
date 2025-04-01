@@ -1,6 +1,7 @@
 package com.seniru.walley
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,14 +31,21 @@ class MainActivity : AppCompatActivity() {
     )
     private lateinit var addTransactionButton: TextView
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
         addTransactionButton.setOnClickListener {
-            CreateTransactionDialog(this).show()
+            val dialog = CreateTransactionDialog(this) {
+                val diaryFragment = supportFragmentManager.findFragmentByTag("DiaryFragment") as? DiaryFragment
+                diaryFragment?.displayTransactions()
+            }
+            dialog.show()
+
         }
+
 
         for (i in screens.indices) {
             val screen = screens[i]

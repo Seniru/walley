@@ -6,7 +6,7 @@ import android.icu.util.Currency
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.edit
-import com.seniru.walley.models.ValidationResult
+import com.seniru.walley.utils.ValidationResult
 
 class SharedMemory private constructor(context: Context) {
     private val appContext = context.applicationContext
