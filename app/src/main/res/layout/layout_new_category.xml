@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp">
+    android:background="@color/background"
+    android:padding="20dp"
+    android:theme="@style/Theme.AppTheme">
 
     <TextView
         android:id="@+id/back_button"
@@ -107,14 +109,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/textPrimary">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FF4500" />
                     </FrameLayout>
@@ -123,14 +125,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FF8C00" />
                     </FrameLayout>
@@ -138,14 +140,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FFA500" />
                     </FrameLayout>
@@ -153,14 +155,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FFD700" />
                     </FrameLayout>
@@ -168,14 +170,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FFFF00" />
                     </FrameLayout>
@@ -183,14 +185,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#ADFF2F" />
                     </FrameLayout>
@@ -198,14 +200,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#7FFF00" />
                     </FrameLayout>
@@ -213,14 +215,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#00FF00" />
                     </FrameLayout>
@@ -228,14 +230,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#32CD32" />
                     </FrameLayout>
@@ -243,14 +245,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#00FA9A" />
                     </FrameLayout>
@@ -258,14 +260,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#00FF7F" />
                     </FrameLayout>
@@ -273,14 +275,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#40E0D0" />
                     </FrameLayout>
@@ -288,14 +290,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#00CED1" />
                     </FrameLayout>
@@ -303,14 +305,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#1E90FF" />
                     </FrameLayout>
@@ -318,14 +320,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#4169E1" />
                     </FrameLayout>
@@ -333,14 +335,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#0000FF" />
                     </FrameLayout>
@@ -348,14 +350,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#8A2BE2" />
                     </FrameLayout>
@@ -363,14 +365,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#9932CC" />
                     </FrameLayout>
@@ -378,14 +380,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#BA55D3" />
                     </FrameLayout>
@@ -393,14 +395,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FF00FF" />
                     </FrameLayout>
@@ -408,14 +410,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/container_highlighted"
                         android:backgroundTint="@color/background">
 
                         <FrameLayout
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:background="@drawable/container"
                             android:backgroundTint="#FF1493" />
                     </FrameLayout>
@@ -444,8 +446,7 @@
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/icon_grid"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:columnCount="6">
+                android:layout_height="wrap_content">
 
             </androidx.gridlayout.widget.GridLayout>
 

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppTheme">
 
     <TextView
         android:id="@+id/textView28"
@@ -148,5 +149,9 @@
         android:textColor="@color/background"
         android:textSize="@dimen/normal_text"
         app:cornerRadius="@dimen/button_radius" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="75dp" />
 
 </LinearLayout>

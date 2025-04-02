@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Food"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/normal_text"
                     android:textStyle="bold" />
 

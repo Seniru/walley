@@ -1,159 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/add_transaction"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/primary_heading"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/normal_text"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/transactionTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text" />
-
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
-
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/amount"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/normal_text"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/transactionAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
-
-    <View
-        android:id="@+id/divider8"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
+    android:background="@color/background"
+    android:theme="@style/Theme.AppTheme">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView34"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type"
+            android:layout_marginBottom="15dp"
+            android:text="@string/add_transaction"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/primary_heading"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/normal_text"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/typeSpinner"
-            android:layout_width="200dp"
+        <EditText
+            android:id="@+id/transactionTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/transaction_types" />
-    </LinearLayout>
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/textPrimary" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
 
         <TextView
-            android:id="@+id/textView36"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView39"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/category"
+            android:text="@string/amount"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/normal_text"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/categorySpinner"
-            android:layout_width="200dp"
+        <EditText
+            android:id="@+id/transactionAmount"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@android:array/phoneTypes" />
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/textPrimary" />
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/normal_text"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/typeSpinner"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/transaction_types"
+                android:theme="@style/Theme.AppTheme" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/category"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/normal_text"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:entries="@android:array/phoneTypes"
+                android:theme="@style/Theme.AppTheme" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_date"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/normal_text"
+            android:textStyle="bold" />
+
+        <CalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.AppTheme" />
+
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/accent"
+            android:text="@string/add_transaction"
+            android:textColor="@color/background"
+            android:textSize="@dimen/normal_text"
+            app:cornerRadius="@dimen/button_radius" />
 
     </LinearLayout>
-
-    <View
-        android:id="@+id/divider7"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
-
-    <TextView
-        android:id="@+id/textView40"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_date"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/normal_text"
-        android:textStyle="bold" />
-
-    <CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:id="@+id/divider9"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
-
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent"
-        android:text="@string/add_transaction"
-        android:textColor="@color/background"
-        android:textSize="@dimen/normal_text"
-        app:cornerRadius="@dimen/button_radius" />
-
-</LinearLayout>
+</ScrollView>

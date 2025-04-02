@@ -1,8 +1,10 @@
 package com.seniru.walley
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
@@ -15,12 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.toColor
 import androidx.core.view.children
-import androidx.core.view.setPadding
 import androidx.gridlayout.widget.GridLayout
 import com.seniru.walley.models.Category
 import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.utils.ValidationResult
+import com.seniru.walley.utils.dpToPixels
+import java.security.AccessController.getContext
 
 
 class CreateCategoryActivity : AppCompatActivity() {
@@ -54,7 +57,8 @@ class CreateCategoryActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private val categoryDataStore = CategoryDataStore.getInstance(this)
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_new_category)
@@ -86,32 +90,36 @@ class CreateCategoryActivity : AppCompatActivity() {
 
 
         val gridView = findViewById<GridLayout>(R.id.icon_grid)
+        val textViewWidth = dpToPixels(44, this).toInt()
+
+        val displayMetrics = DisplayMetrics()
+        display.getMetrics(displayMetrics)
+        gridView.columnCount = displayMetrics.widthPixels / textViewWidth
 
         for (i in icons.indices) {
             val textView = TextView(this).apply {
                 text = icons[i]
                 gravity = Gravity.CENTER
-                width = 180
-                height = 180
-                textSize = 32f
-                background = resources.getDrawable(R.color.background)
+                width = textViewWidth
+                height = textViewWidth
+                textSize = dpToPixels(16, context)
+                setTextColor(resources.getColor(R.color.textPrimary))
+                background = resources.getDrawable(R.drawable.container)
+                backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.background))
             }
             textView.typeface = ResourcesCompat.getFont(this, R.font.fa_solid)
 
-            val params = GridLayout.LayoutParams().apply {
-                rowSpec = GridLayout.spec(i / 5)
-                columnSpec = GridLayout.spec(i % 5)
-            }
-            params.rowSpec = GridLayout.spec(i / 5)
-            params.columnSpec = GridLayout.spec(i % 5)
-            params.setMargins(10, 10, 10, 10)
+            val params = GridLayout.LayoutParams()
+            //params.rowSpec = GridLayout.spec(i / 5)
+            //params.columnSpec = GridLayout.spec(i % 5)
+            val margins = dpToPixels(2, this).toInt()
+            params.setMargins(margins, margins, margins, margins)
 
             textView.layoutParams = params
 
             val frame = FrameLayout(this).apply {
                 background = resources.getDrawable(R.drawable.container_highlighted)
                 backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.background))
-                setPadding(15)
             }
 
             frame.setOnClickListener {
