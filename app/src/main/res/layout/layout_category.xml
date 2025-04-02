@@ -33,79 +33,22 @@
             app:cornerRadius="@dimen/button_radius" />
     </LinearLayout>
 
-    <com.seniru.walley.ui.CategoryView
+    <LinearLayout
+        android:id="@+id/categoryView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Food"
-        app:useIcon="\uf805"
-        app:value="80"
-        app:maxValue="120"
-        app:color="#FF0000" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Transport"
-        app:useIcon="\uf207"
-        app:value="40"
-        app:maxValue="80"
-        app:color="#FF9800" />
+        <com.seniru.walley.ui.CategoryView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:color="#FF0000"
+            app:maxValue="120"
+            app:title="Food"
+            app:useIcon="\uf805"
+            app:value="80" />
+    </LinearLayout>
 
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Entertainment"
-        app:useIcon="\uf008"
-        app:value="60"
-        app:maxValue="150"
-        app:color="#4CAF50" />
-
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Shopping"
-        app:useIcon="\uf07a"
-        app:value="30"
-        app:maxValue="200"
-        app:color="#2196F3" />
-
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Health"
-        app:useIcon="\uf21e"
-        app:value="50"
-        app:maxValue="100"
-        app:color="#9C27B0" />
-
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Education"
-        app:useIcon="\uf19d"
-        app:value="95"
-        app:maxValue="90"
-        app:color="#03A9F4" />
-
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Bills"
-        app:useIcon="\uf571"
-        app:value="20"
-        app:maxValue="50"
-        app:color="#607D8B" />
-
-
-
-    <com.seniru.walley.ui.CategoryView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Gifts"
-        app:useIcon="\uf06b"
-        app:value="10"
-        app:maxValue="30"
-        app:color="#E91E63" />
 
     <Space
         android:layout_width="match_parent"

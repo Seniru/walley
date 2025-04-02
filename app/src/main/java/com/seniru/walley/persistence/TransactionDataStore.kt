@@ -1,15 +1,13 @@
 package com.seniru.walley.persistence
 
 import android.content.Context
-import android.util.JsonReader
 import android.util.Log
 import com.seniru.walley.models.Transaction
 import org.json.JSONArray
-import org.json.JSONObject
 import java.io.FileNotFoundException
 import java.io.IOException
 
-class TransactionDataStore private constructor(context: Context) {
+class TransactionDataStore private constructor(context: Context) : DataStorable<Transaction> {
 
     private var appContext = context.applicationContext
     private var transactions: ArrayList<Transaction> = arrayListOf()
@@ -30,16 +28,16 @@ class TransactionDataStore private constructor(context: Context) {
             }
     }
 
-    fun push(transaction: Transaction) {
+    override fun push(item: Transaction) {
         // failsafe: read everything if the array list is empty
         // it possibly does not have the updated list when changing contexts
         if (transactions.size == 0) transactions = readAll()
-        transactions.add(transaction)
+        transactions.add(item)
         save()
     }
 
     // internal storage functions
-    fun readAll(): ArrayList<Transaction> {
+    override fun readAll(): ArrayList<Transaction> {
         try {
             appContext.openFileInput(fileName).bufferedReader().use { reader ->
                 val content = reader.readText()
@@ -57,7 +55,7 @@ class TransactionDataStore private constructor(context: Context) {
 
     }
 
-    fun save() {
+    override fun save() {
         val jsonArray = JSONArray()
         transactions.forEach { jsonArray.put(it.toJson()) }
         try {

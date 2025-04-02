@@ -47,7 +47,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/categoryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -71,7 +71,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextNumber2"
+                android:id="@+id/spendingLimitTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -99,163 +99,326 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/colorContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FF0000" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/textPrimary">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FF4500" />
+                    </FrameLayout>
+
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FF4500" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FF8C00" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FF8C00" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FFA500" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FFA500" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FFD700" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FFD700" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FFFF00" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FFFF00" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#ADFF2F" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#ADFF2F" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#7FFF00" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#7FFF00" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#00FF00" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#00FF00" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#32CD32" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#32CD32" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#00FA9A" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#00FA9A" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#00FF7F" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#00FF7F" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#40E0D0" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#40E0D0" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#00CED1" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#00CED1" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#1E90FF" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#1E90FF" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#4169E1" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#4169E1" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#0000FF" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#0000FF" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#8A2BE2" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#8A2BE2" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#9932CC" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#9932CC" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#BA55D3" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#BA55D3" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FF00FF" />
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FF00FF" />
+                        android:background="@drawable/container_highlighted"
+                        android:backgroundTint="@color/background">
 
-                    <FrameLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/container"
-                        android:backgroundTint="#FF1493" />
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/container"
+                            android:backgroundTint="#FF1493" />
+                    </FrameLayout>
 
 
                 </LinearLayout>
@@ -295,7 +458,7 @@
                 android:background="?android:attr/listDivider" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/createButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/accent"
