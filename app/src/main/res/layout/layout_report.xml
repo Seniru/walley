@@ -36,7 +36,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/totalIncomeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$99.99"
@@ -67,7 +67,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/totalExpensesTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$99.99"

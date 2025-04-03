@@ -87,8 +87,8 @@ class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
 
         val percent = (value / maxValue) * 100
         progressBar.apply {
-            progress = value.toInt()
             max = maxValue.toInt()
+            progress = value.toInt()
             progressTintList = ColorStateList.valueOf(
                 resources.getColor(
                     when {
