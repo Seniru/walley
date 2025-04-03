@@ -12,7 +12,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/datePre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -23,22 +23,21 @@
             android:textSize="@dimen/primary_heading" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/displayDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:text="@string/today"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/primary_heading"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/dateNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
             android:fontFamily="@font/fa_solid"
             android:text="\uf054"
             android:textColor="@color/textSecondary"

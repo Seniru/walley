@@ -6,6 +6,7 @@ import com.seniru.walley.models.Transaction
 import org.json.JSONArray
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.util.Date
 
 class TransactionDataStore private constructor(context: Context) : DataStorable<Transaction> {
 
@@ -52,7 +53,11 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
             Log.i("TransactionDataStore", "file not initialized yet")
             return ArrayList()
         }
+    }
 
+    fun read(fromDate: Date, toDate: Date): ArrayList<Transaction> {
+        val allTransactions = readAll()
+        return allTransactions.filter { it.date in fromDate.time..toDate.time } as ArrayList<Transaction>
     }
 
     override fun save() {
