@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppTheme">
 
     <TextView
         android:id="@+id/textView28"
@@ -49,11 +50,21 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/monthly_budget_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/update_budget_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent"
+        android:text="@string/update_budget"
+        android:textColor="@color/background"
+        android:textSize="@dimen/normal_text"
+        app:cornerRadius="@dimen/button_radius" />
 
     <View
         android:id="@+id/divider3"
@@ -73,7 +84,7 @@
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch1"
+        android:id="@+id/push_notification_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="false"
@@ -84,7 +95,7 @@
         android:theme="@style/Theme.AppTheme" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch2"
+        android:id="@+id/budget_limit_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/budget_limit_alerts"
@@ -93,7 +104,7 @@
         android:theme="@style/Theme.AppTheme" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch3"
+        android:id="@+id/daily_reminder_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/daily_reminders"
@@ -138,5 +149,9 @@
         android:textColor="@color/background"
         android:textSize="@dimen/normal_text"
         app:cornerRadius="@dimen/button_radius" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="75dp" />
 
 </LinearLayout>

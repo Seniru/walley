@@ -12,7 +12,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/datePre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -23,137 +23,44 @@
             android:textSize="@dimen/primary_heading" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/displayDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:text="@string/today"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/primary_heading"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/dateNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
             android:fontFamily="@font/fa_solid"
             android:text="\uf054"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/primary_heading" />
     </LinearLayout>
 
-    <com.seniru.walley.ui.TransactionView
+    <LinearLayout
+        android:id="@+id/items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#FF0000"
-        app:time="9.00 AM"
-        app:title="Food"
-        app:type="income"
-        app:useIcon="\ue4c6"
-        app:value="$99.99" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#00FF00"
-        app:time="10.00 AM"
-        app:title="Groceries"
-        app:type="expense"
-        app:useIcon="\uf07a"
-        app:value="$50.00" />
+        <com.seniru.walley.ui.TransactionView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:color="#FF0000"
+            app:time="9.00 AM"
+            app:title="Food"
+            app:type="income"
+            app:useIcon="\uf86d"
+            app:value="99.99" />
+    </LinearLayout>
 
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#FF5733"
-        app:time="11.30 AM"
-        app:title="Lunch"
-        app:type="expense"
-        app:useIcon="\uf2e7"
-        app:value="$20.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#0000FF"
-        app:time="1.00 PM"
-        app:title="Salary"
-        app:type="income"
-        app:useIcon="\uf0d6"
-        app:value="$2000.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#800080"
-        app:time="3.00 PM"
-        app:title="Electricity Bill"
-        app:type="expense"
-        app:useIcon="\uf1e5"
-        app:value="$120.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#FF1493"
-        app:time="4.30 PM"
-        app:title="Phone Bill"
-        app:type="expense"
-        app:useIcon="\uf10b"
-        app:value="$75.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#32CD32"
-        app:time="6.00 PM"
-        app:title="Freelance Work"
-        app:type="income"
-        app:useIcon="\uf0c0"
-        app:value="$150.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#FFD700"
-        app:time="7.30 PM"
-        app:title="Rent"
-        app:type="expense"
-        app:useIcon="\uf1ad"
-        app:value="$800.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#ADFF2F"
-        app:time="8.15 PM"
-        app:title="Dinner"
-        app:type="expense"
-        app:useIcon="\uf0f5"
-        app:value="$35.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#C71585"
-        app:time="9.00 PM"
-        app:title="Gift"
-        app:type="expense"
-        app:useIcon="\uf004"
-        app:value="$150.00" />
-
-    <com.seniru.walley.ui.TransactionView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:color="#8A2BE2"
-        app:time="10.30 PM"
-        app:title="Investment"
-        app:type="income"
-        app:useIcon="\uf0e4"
-        app:value="$500.00" />
 
     <Space
         android:layout_width="match_parent"

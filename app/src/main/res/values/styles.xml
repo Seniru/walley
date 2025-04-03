@@ -4,8 +4,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorControlActivated">@color/accent</item>
 
-        <!-- You can also set colorControlNormal, colorControlActivated
-             colorControlHighlight, and colorSwitchThumbNormal. -->
+        <item name="android:textColor">@color/textPrimary</item>
 
     </style>
 </resources>

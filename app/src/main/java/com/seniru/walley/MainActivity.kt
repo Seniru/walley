@@ -1,17 +1,29 @@
 package com.seniru.walley
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import com.seniru.walley.persistence.SharedMemory
+import com.seniru.walley.persistence.TransactionDataStore
+import com.seniru.walley.utils.formatCurrency
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,11 +35,30 @@ class MainActivity : AppCompatActivity() {
         arrayOf(R.id.report_button, ReportFragment::class.java),
         arrayOf(R.id.settings_button, SettingsFragment::class.java),
     )
+    private lateinit var addTransactionButton: TextView
+    private lateinit var preferences: SharedMemory
+    private lateinit var transactionDataStore: TransactionDataStore
+    private lateinit var spendingProgress: ProgressBar
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        preferences = SharedMemory.getInstance(this)
+        transactionDataStore = TransactionDataStore.getInstance(this)
         mainFrame = findViewById(R.id.mainframe)
+        addTransactionButton = findViewById(R.id.add_trans_button)
+        spendingProgress = findViewById(R.id.spendingProgress)
+        addTransactionButton.setOnClickListener {
+            val dialog = CreateTransactionDialog(this) {
+                val diaryFragment =
+                    supportFragmentManager.findFragmentByTag("DiaryFragment") as? DiaryFragment
+                diaryFragment?.displayTransactions()
+            }
+            dialog.show()
+
+        }
+
 
         for (i in screens.indices) {
             val screen = screens[i]
@@ -39,6 +70,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchScreens(0)
+        displayAvailableBalance()
+        updateBudgetInformation()
     }
 
     private fun switchScreens(newScreen: Int) {
@@ -65,4 +98,41 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.mainframe, fragment)
             .commit()
     }
+
+    private fun displayAvailableBalance() {
+        findViewById<TextView>(R.id.availableBalanceTextView).text =
+            formatCurrency(preferences.getBalance(), this)
+    }
+
+    private fun updateBudgetInformation() {
+        val monthlyBudget = preferences.getMonthlyBudget()
+        val transactions = transactionDataStore.readLastMonth()
+        val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
+            .reduceOrNull { total, amount -> total + amount }
+        findViewById<TextView>(R.id.budgetLimitTextView).text =
+            getString(
+                R.string.budget_vs_expenses,
+                formatCurrency(total ?: 0f, this),
+                formatCurrency(monthlyBudget, this)
+            )
+
+        val percent = (total?.div(monthlyBudget))?.times(100)
+        spendingProgress.max = monthlyBudget.toInt()
+        spendingProgress.progress = total?.toInt() ?: 0
+
+        if (percent != null) {
+            spendingProgress.progressTintList = ColorStateList.valueOf(
+                resources.getColor(
+                    when {
+                        percent < 65 -> R.color.primary
+                        percent >= 65 && percent < 85 -> R.color.secondary
+                        else -> R.color.error
+                    }
+                )
+            )
+        }
+        spendingProgress.invalidate()
+    }
+
+
 }

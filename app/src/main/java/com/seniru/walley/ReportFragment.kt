@@ -1,8 +1,13 @@
 package com.seniru.walley
 
 import android.graphics.Color
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.graphics.toColor
 
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.PieChart
@@ -14,38 +19,56 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.seniru.walley.models.Category
+import com.seniru.walley.persistence.CategoryDataStore
+import com.seniru.walley.persistence.TransactionDataStore
+import com.seniru.walley.utils.formatCurrency
+import kotlin.math.exp
 import kotlin.random.Random
 
 class ReportFragment : Fragment(R.layout.layout_report) {
 
     private var view: View? = null
+    private lateinit var transactionDataStore: TransactionDataStore
+    private lateinit var categoryDataStore: CategoryDataStore
+    private lateinit var totalIncomeTextView: TextView
+    private lateinit var totalExpensesTextView: TextView
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.view = view
+        transactionDataStore = TransactionDataStore.getInstance(requireContext())
+        categoryDataStore = CategoryDataStore.getInstance(requireContext())
+
+        totalIncomeTextView = view.findViewById(R.id.totalIncomeTextView)
+        totalExpensesTextView = view.findViewById(R.id.totalExpensesTextView)
+
         drawPieChart()
         drawSpendingLineChart()
+        displayIncomeExpenses()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawPieChart() {
         val pieChart = view?.findViewById<PieChart>(R.id.piechart)
-        var entries = listOf(
-            PieEntry(50f, "Food"),
-            PieEntry(30f, "Transportation"),
-            PieEntry(60f, "Electricity"),
-            PieEntry(20f, "Entertainment"),
-            PieEntry(12f, "Gifts")
+
+        val transactions = transactionDataStore.readLastMonth()
+        val categories = categoryDataStore.readAll()
+        categories.add(
+            0,
+            Category("Other", 0f, resources.getColor(R.color.textSecondary).toColor(), "")
         )
 
+        val entries = transactions
+            .filter { it.type == "expense" }
+            .groupBy { it.category }
+            .mapValues { entry -> entry.value.sumOf { it.amount?.toDouble() ?: 0.0 } }
+            .map { entry -> PieEntry(entry.value.toFloat(), entry.key) }
+
+
         pieChart?.data = PieData(PieDataSet(entries, "").apply {
-            colors = listOf(
-                "#FF6347".toColorInt(), // Tomato Red
-                "#4682B4".toColorInt(), // Steel Blue
-                "#32CD32".toColorInt(), // Lime Green
-                "#FFD700".toColorInt(), // Gold
-                "#8A2BE2".toColorInt(), // Blue Violet
-                "#FF4500".toColorInt() // Orange Red
-            )
+            colors = categories.map { it.color?.toArgb() ?: R.color.accent }
             valueTextColor = Color.WHITE
             valueTextSize = 12f
         })
@@ -81,6 +104,17 @@ class ReportFragment : Fragment(R.layout.layout_report) {
             text = ""
         }
 
+    }
+
+    private fun displayIncomeExpenses() {
+        val transactions = transactionDataStore.readLastMonth()
+        val income =
+            transactions.filter { it.type == "income" }.sumOf { it.amount?.toDouble() ?: 0.0 }
+        val expenses =
+            transactions.filter { it.type == "expense" }.sumOf { it.amount?.toDouble() ?: 0.0 }
+
+        totalIncomeTextView.text = formatCurrency(income.toFloat(), requireContext())
+        totalExpensesTextView.text = formatCurrency(expenses.toFloat(), requireContext())
     }
 
 }

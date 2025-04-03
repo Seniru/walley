@@ -20,7 +20,7 @@
             android:fontFamily="@font/fa_solid"
             android:gravity="center"
             android:padding="10dp"
-            android:text="\ue4c6"
+            android:text="\uf86d"
             android:textSize="32sp" />
 
         <LinearLayout
@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Food"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/normal_text"
                     android:textStyle="bold" />
 
