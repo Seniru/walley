@@ -1,12 +1,15 @@
 package com.seniru.walley
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.seniru.walley.persistence.SharedMemory
+import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.formatCurrency
 import org.w3c.dom.Text
 
@@ -33,14 +37,18 @@ class MainActivity : AppCompatActivity() {
     )
     private lateinit var addTransactionButton: TextView
     private lateinit var preferences: SharedMemory
+    private lateinit var transactionDataStore: TransactionDataStore
+    private lateinit var spendingProgress: ProgressBar
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         preferences = SharedMemory.getInstance(this)
+        transactionDataStore = TransactionDataStore.getInstance(this)
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
+        spendingProgress = findViewById(R.id.spendingProgress)
         addTransactionButton.setOnClickListener {
             val dialog = CreateTransactionDialog(this) {
                 val diaryFragment =
@@ -96,12 +104,48 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateBudgetInformation() {
+        val calendar = Calendar.getInstance()
+        val fromDate = calendar.apply {
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time
+
+        val toDate = calendar.apply {
+            set(Calendar.DAY_OF_MONTH, getActualMaximum(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+        }.time
+
+        val monthlyBudget = preferences.getMonthlyBudget()
+        val transactions = transactionDataStore.read(fromDate, toDate)
+        val total = transactions.map { it.amount ?: 0.0f }.reduceOrNull { total, amount -> total + amount }
         findViewById<TextView>(R.id.budgetLimitTextView).text =
             getString(
                 R.string.budget_vs_expenses,
-                formatCurrency(0f, this),
-                formatCurrency(preferences.getMonthlyBudget(), this)
+                formatCurrency(total ?: 0f, this),
+                formatCurrency(monthlyBudget, this)
             )
+
+        val percent = (total?.div(monthlyBudget))?.times(100)
+        spendingProgress.max = monthlyBudget.toInt()
+        spendingProgress.progress = total?.toInt() ?: 0
+
+        if (percent != null) {
+            spendingProgress.progressTintList = ColorStateList.valueOf(
+                resources.getColor(
+                    when {
+                        percent < 65 -> R.color.primary
+                        percent >= 65 && percent < 85 -> R.color.secondary
+                        else -> R.color.error
+                    }
+                )
+            )
+        }
+        spendingProgress.invalidate()
     }
 
 

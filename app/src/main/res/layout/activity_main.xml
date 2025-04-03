@@ -79,11 +79,10 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar2"
+            android:id="@+id/spendingProgress"
             style="@android:style/Widget.Material.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progress="40"
             android:progressTint="@color/primary"
             android:scaleY="2.5" />
 

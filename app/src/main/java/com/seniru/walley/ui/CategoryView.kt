@@ -19,6 +19,7 @@ class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
     private val progressBar: ProgressBar
     private val iconView: TextView
     private val spendingTextView: TextView
+    private val percentValueTextView: TextView
     private var value: Float = -1f
     private var maxValue: Float = -1f
 
@@ -30,6 +31,7 @@ class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
         progressBar = findViewById(R.id.progressBar)
         iconView = findViewById(R.id.icon)
         spendingTextView = findViewById(R.id.spendingValue)
+        percentValueTextView = findViewById(R.id.percentValue)
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -98,6 +100,10 @@ class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
             )
         }
 
+    }
+
+    fun setSpendingVsTotal(percentage: Float) {
+        percentValueTextView.text = resources.getString(R.string.percent, percentage)
     }
 
 }

@@ -42,7 +42,6 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
 
         view.findViewById<TextView>(R.id.datePre).setOnClickListener {
             changeDateBy(-1)
-
         }
 
         view.findViewById<TextView>(R.id.dateNext).setOnClickListener {
@@ -115,6 +114,7 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
         }
         displayTransactions()
     }
+
 
 
 }
