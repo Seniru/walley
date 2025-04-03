@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAvailableBalance() {
-        findViewById<TextView>(R.id.availableBalanceTextView).text = formatCurrency(99.99f, this)
+        findViewById<TextView>(R.id.availableBalanceTextView).text =
+            formatCurrency(preferences.getBalance(), this)
     }
 
     private fun updateBudgetInformation() {

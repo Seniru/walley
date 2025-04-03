@@ -44,6 +44,10 @@ class SharedMemory private constructor(context: Context) {
         return Currency.getInstance(currencyISO)
     }
 
+    fun getBalance(): Float {
+        return preferences.getFloat("balance", 0f)
+    }
+
     fun setIsAllowingPushNotifications(enabled: Boolean) {
         Log.i("SharedMemory", "setNotificationPreferences: $enabled")
         preferences.edit() { putBoolean("push_notifications_enabled", enabled).apply() }
@@ -99,6 +103,11 @@ class SharedMemory private constructor(context: Context) {
         Log.i("SharedMemory", "setCurrency: $currencyISO")
         preferences.edit() { putString("currency", currencyISO).apply() }
         Toast.makeText(appContext, "Preferred currency updated!", Toast.LENGTH_SHORT).show()
+    }
+
+    fun setBalance(balance: Float) {
+        Log.i("SharedMemory", "setBalance: $balance")
+        preferences.edit() { putFloat("balance", balance).apply() }
     }
 
 }

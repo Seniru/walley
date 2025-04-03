@@ -22,6 +22,7 @@ import com.seniru.walley.models.Category
 import com.seniru.walley.models.Transaction
 import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
+import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.ValidationResult
 import java.util.Calendar
@@ -32,6 +33,7 @@ class CreateTransactionDialog(
 ) : AlertDialog(context) {
 
     private val transactionStore = TransactionDataStore.getInstance(context)
+    private val preferences = SharedMemory.getInstance(context)
 
     init {
         val view: View =
@@ -92,9 +94,13 @@ class CreateTransactionDialog(
 
                 else -> {
                     transactionStore.push(transaction)
+                    preferences.setBalance(
+                        preferences.getBalance() + (transaction.amount
+                            ?: 0f) * (if (transaction.type == "income") 1 else -1)
+                    )
+
                     dismiss()
                     LiveDataEventBus.sendEvent("refresh_transactions")
-
                 }
             }
 
