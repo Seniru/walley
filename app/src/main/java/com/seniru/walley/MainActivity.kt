@@ -17,6 +17,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import com.seniru.walley.persistence.SharedMemory
+import com.seniru.walley.utils.formatCurrency
 import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
@@ -30,16 +32,19 @@ class MainActivity : AppCompatActivity() {
         arrayOf(R.id.settings_button, SettingsFragment::class.java),
     )
     private lateinit var addTransactionButton: TextView
+    private lateinit var preferences: SharedMemory
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        preferences = SharedMemory.getInstance(this)
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
         addTransactionButton.setOnClickListener {
             val dialog = CreateTransactionDialog(this) {
-                val diaryFragment = supportFragmentManager.findFragmentByTag("DiaryFragment") as? DiaryFragment
+                val diaryFragment =
+                    supportFragmentManager.findFragmentByTag("DiaryFragment") as? DiaryFragment
                 diaryFragment?.displayTransactions()
             }
             dialog.show()
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchScreens(0)
+        displayAvailableBalance()
+        updateBudgetInformation()
     }
 
     private fun switchScreens(newScreen: Int) {
@@ -82,6 +89,19 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainframe, fragment)
             .commit()
+    }
+
+    private fun displayAvailableBalance() {
+        findViewById<TextView>(R.id.availableBalanceTextView).text = formatCurrency(99.99f, this)
+    }
+
+    private fun updateBudgetInformation() {
+        findViewById<TextView>(R.id.budgetLimitTextView).text =
+            getString(
+                R.string.budget_vs_expenses,
+                formatCurrency(0f, this),
+                formatCurrency(preferences.getMonthlyBudget(), this)
+            )
     }
 
 

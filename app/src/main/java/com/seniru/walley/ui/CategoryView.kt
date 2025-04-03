@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.seniru.walley.R
 import com.seniru.walley.utils.Colors
+import com.seniru.walley.utils.formatCurrency
 
 class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
@@ -78,8 +79,8 @@ class CategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
         if (value == -1f) return
         spendingTextView.text = resources.getString(
             R.string.budget_vs_expenses,
-            value.toString(),
-            maxValue.toString()
+            formatCurrency(value, context),
+            formatCurrency(maxValue, context)
         )
 
         val percent = (value / maxValue) * 100

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.Spinner
@@ -15,8 +16,11 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.graphics.toColor
 import androidx.core.view.setPadding
+import com.seniru.walley.models.Category
 import com.seniru.walley.models.Transaction
+import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.ValidationResult
@@ -53,6 +57,10 @@ class CreateTransactionDialog(
         val categorySpinner = findViewById<Spinner>(R.id.categorySpinner)
         val dateView = findViewById<CalendarView>(R.id.calendar)
         val submitButton = findViewById<Button>(R.id.submitButton)
+
+        if (categorySpinner != null) {
+            setCategories(categorySpinner)
+        }
 
         dateView?.setOnDateChangeListener { _, year, month, dayOfMonth ->
             dateView.date = Calendar.getInstance()
@@ -91,6 +99,17 @@ class CreateTransactionDialog(
             }
 
         }
+
+    }
+
+    private fun setCategories(spinner: Spinner) {
+        val categories =
+            CategoryDataStore.getInstance(context).readAll().map { it.name }.toMutableList()
+        categories.add(0, "Other")
+        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.setSelection(0)
 
     }
 

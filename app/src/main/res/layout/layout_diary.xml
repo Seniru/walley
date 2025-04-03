@@ -58,8 +58,8 @@
             app:time="9.00 AM"
             app:title="Food"
             app:type="income"
-            app:useIcon="\ue4c6"
-            app:value="$99.99" />
+            app:useIcon="\uf86d"
+            app:value="99.99" />
     </LinearLayout>
 
 

@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/availableBalanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="$99.9"
@@ -88,10 +88,10 @@
             android:scaleY="2.5" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/budgetLimitTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$99.99 spent of $999.99 limit."
+            android:text="@string/budget_vs_expenses"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/small_text" />
     </LinearLayout>

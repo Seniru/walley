@@ -2,13 +2,17 @@ package com.seniru.walley.ui
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.seniru.walley.R
+import com.seniru.walley.models.Category
 import com.seniru.walley.utils.Colors
+import com.seniru.walley.utils.formatCurrency
 
 class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
@@ -32,7 +36,7 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         ).apply {
             setTitle(getString(R.styleable.walley_title))
             setIsIncome(getString(R.styleable.walley_type) == "income")
-            setValue(getString(R.styleable.walley_value))
+            setValue(getFloat(R.styleable.walley_value, 0f))
             setIcon(getString(R.styleable.walley_useIcon))
             setIconColor(
                 getColor(
@@ -49,8 +53,8 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         titleView.text = title
     }
 
-    fun setValue(value: String?) {
-        valueView.text = value
+    fun setValue(value: Float) {
+        valueView.text = formatCurrency(value, context)
 
     }
 
@@ -70,6 +74,12 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         val lighterColor = Colors.lightenColor(color, 0.85f)
         iconView.backgroundTintList = ColorStateList.valueOf(lighterColor)
         iconView.setTextColor(color)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setCategory(category: Category) {
+        setIcon(category.icon)
+        category.color?.let { setIconColor(it.toArgb()) }
     }
 
     fun setTime(time: String?) {

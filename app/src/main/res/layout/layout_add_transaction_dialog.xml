@@ -122,7 +122,6 @@
                 android:id="@+id/categorySpinner"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:entries="@android:array/phoneTypes"
                 android:theme="@style/Theme.AppTheme" />
 
         </LinearLayout>
