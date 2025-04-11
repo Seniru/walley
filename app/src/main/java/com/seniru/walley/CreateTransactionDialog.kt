@@ -1,8 +1,12 @@
 package com.seniru.walley
 
+import WalleyNotificationManager
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,8 +30,9 @@ import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.ValidationResult
 import java.util.Calendar
+import java.util.Date
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class CreateTransactionDialog(
     context: Context, private val onTransactionAdded: () -> Unit
 ) : AlertDialog(context) {
@@ -50,7 +55,7 @@ class CreateTransactionDialog(
         create()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun create() {
         super.create()
         val titleTextView = findViewById<TextView>(R.id.transactionTitle)
@@ -98,6 +103,7 @@ class CreateTransactionDialog(
                         preferences.getBalance() + (transaction.amount
                             ?: 0f) * (if (transaction.type == "income") 1 else -1)
                     )
+                    notifyIfOverBudget()
 
                     dismiss()
                     LiveDataEventBus.sendEvent("refresh_transactions")
@@ -117,6 +123,45 @@ class CreateTransactionDialog(
         spinner.adapter = adapter
         spinner.setSelection(0)
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun notifyIfOverBudget() {
+        val monthlyBudget = preferences.getMonthlyBudget()
+        val transactions = transactionStore.readLastMonth()
+        val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
+            .reduceOrNull { total, amount -> total + amount } ?: 0f
+
+        val today = android.icu.util.Calendar.getInstance().apply {
+            time = Date()
+        }
+        val startOfDay = today.apply {
+            set(android.icu.util.Calendar.HOUR_OF_DAY, 0)
+            set(android.icu.util.Calendar.MINUTE, 0)
+            set(android.icu.util.Calendar.SECOND, 0)
+            set(android.icu.util.Calendar.MILLISECOND, 0)
+        }.time
+        val endOfDay = today.apply {
+            set(android.icu.util.Calendar.HOUR_OF_DAY, 23)
+            set(android.icu.util.Calendar.MINUTE, 59)
+            set(android.icu.util.Calendar.SECOND, 59)
+        }.time
+        val todayTransactions = transactionStore.read(startOfDay, endOfDay)
+
+        if (todayTransactions.size == 1 && total >= monthlyBudget * 0.75) {
+            val currency = preferences.getCurrency().currencyCode
+            val message =
+                if (total > monthlyBudget)
+                    "You went $currency${total - monthlyBudget} over your $currency$monthlyBudget budget."
+                else "You’re nearing your budget! Just $currency${monthlyBudget - total} remains out of $currency$monthlyBudget"
+
+            WalleyNotificationManager.createNotification(
+                context,
+                Intent(context, MainActivity::class.java),
+                "Budget limit alert!",
+                message
+            )
+        }
     }
 
 }
