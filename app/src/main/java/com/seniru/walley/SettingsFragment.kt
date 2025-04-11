@@ -1,6 +1,8 @@
 package com.seniru.walley
 
+import android.app.Activity
 import android.icu.util.Currency
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import com.seniru.walley.persistence.SharedMemory
@@ -19,6 +22,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
 
     private lateinit var preferences: SharedMemory
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         preferences = SharedMemory.getInstance(requireContext())
         super.onViewCreated(view, savedInstanceState)
@@ -54,6 +58,9 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             isChecked = preferences.getIsAllowingPushNotifications()
             setOnClickListener {
                 preferences.setIsAllowingPushNotifications(isChecked)
+                if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
+                    WalleyNotificationManager.requestPermissions(activity as Activity)
+
             }
         }
 
@@ -61,6 +68,8 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             isChecked = preferences.getIsSendingBudgetExceededAlert()
             setOnClickListener {
                 preferences.setIsSendingBudgetExceededAlert(isChecked)
+                if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
+                    WalleyNotificationManager.requestPermissions(activity as Activity)
             }
         }
 
@@ -68,6 +77,10 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             isChecked = preferences.getIsDailyReminderEnabled()
             setOnClickListener {
                 preferences.setIsDailyReminderEnabled(isChecked)
+                if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
+                    WalleyNotificationManager.requestPermissions(activity as Activity)
+                if (isChecked && !Reminder.checkPermissions(requireContext()))
+                    Reminder.requestRequiredPermissions(activity as Activity)
             }
         }
 

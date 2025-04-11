@@ -1,6 +1,14 @@
 package com.seniru.walley
 
+import WalleyNotificationManager
+import WalleyNotificationManager.Companion.createNotification
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.icu.util.Calendar
 import android.os.Build
@@ -14,8 +22,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -40,12 +52,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var transactionDataStore: TransactionDataStore
     private lateinit var spendingProgress: ProgressBar
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
-        preferences = SharedMemory.getInstance(this)
-        transactionDataStore = TransactionDataStore.getInstance(this)
+
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
         spendingProgress = findViewById(R.id.spendingProgress)
@@ -70,8 +82,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchScreens(0)
+        initializeComponents()
         displayAvailableBalance()
         updateBudgetInformation()
+
+
     }
 
     private fun switchScreens(newScreen: Int) {
@@ -134,5 +149,23 @@ class MainActivity : AppCompatActivity() {
         spendingProgress.invalidate()
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun initializeComponents() {
+        preferences = SharedMemory.getInstance(this)
+        transactionDataStore = TransactionDataStore.getInstance(this)
+
+        WalleyNotificationManager.createNotificationChannel(this)
+        if (
+            preferences.getIsAllowingPushNotifications()
+            && !WalleyNotificationManager.checkPermissions(this)
+        )
+            WalleyNotificationManager.requestPermissions(this)
+        if (preferences.getIsDailyReminderEnabled()) {
+            if (!Reminder.checkPermissions(this))
+                Reminder.requestRequiredPermissions(this)
+            Reminder.schedule(this)
+        }
+
+    }
 
 }
