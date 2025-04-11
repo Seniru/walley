@@ -1,5 +1,6 @@
 package com.seniru.walley
 
+
 import WalleyNotificationManager
 import WalleyNotificationManager.Companion.createNotification
 import android.Manifest
@@ -9,6 +10,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.icu.util.Calendar
 import android.os.Build
@@ -57,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
         spendingProgress = findViewById(R.id.spendingProgress)
@@ -85,8 +86,6 @@ class MainActivity : AppCompatActivity() {
         initializeComponents()
         displayAvailableBalance()
         updateBudgetInformation()
-
-
     }
 
     private fun switchScreens(newScreen: Int) {

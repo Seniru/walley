@@ -94,7 +94,6 @@ class CreateTransactionDialog(
 
                 else -> {
                     transactionStore.push(transaction)
-                    //transactionStore.read()
                     preferences.setBalance(
                         preferences.getBalance() + (transaction.amount
                             ?: 0f) * (if (transaction.type == "income") 1 else -1)

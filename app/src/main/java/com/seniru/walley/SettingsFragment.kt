@@ -60,7 +60,6 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
                 preferences.setIsAllowingPushNotifications(isChecked)
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
                     WalleyNotificationManager.requestPermissions(activity as Activity)
-
             }
         }
 
@@ -69,8 +68,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             setOnClickListener {
                 preferences.setIsSendingBudgetExceededAlert(isChecked)
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
-                    WalleyNotificationManager.requestPermissions(activity as Activity)
-            }
+                    WalleyNotificationManager.requestPermissions(activity as Activity)            }
         }
 
         view.findViewById<SwitchCompat>(R.id.daily_reminder_switch).apply {
