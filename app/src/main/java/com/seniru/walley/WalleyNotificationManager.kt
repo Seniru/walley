@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.seniru.walley.R
+import com.seniru.walley.persistence.SharedMemory
 
 class WalleyNotificationManager {
     companion object {
@@ -55,6 +56,8 @@ class WalleyNotificationManager {
 
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         fun createNotification(context: Context, intent: Intent, title: String, content: String) {
+            val preferences = SharedMemory.getInstance(context)
+            if (!preferences.getIsAllowingPushNotifications()) return
             val pendingIntent: PendingIntent =
                 PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
