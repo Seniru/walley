@@ -40,6 +40,14 @@ class CategoryDataStore private constructor(context: Context) : DataStorable<Cat
         save()
     }
 
+    override fun delete(index: Int) {
+        // failsafe: read everything if the array list is empty
+        // it possibly does not have the updated list when changing contexts
+        if (categories.size == 0) categories = readAll()
+        categories.removeAt(index)
+        save()
+    }
+
     // internal storage functions
     @RequiresApi(Build.VERSION_CODES.O)
     override fun readAll(): ArrayList<Category> {

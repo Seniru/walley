@@ -13,7 +13,8 @@ class Transaction(
     val amount: Float?,
     val type: String,
     val category: String,
-    val date: Long
+    val date: Long,
+    val index: Int? = null
 ) {
 
     fun validateTitle(): ValidationResult {
@@ -80,13 +81,14 @@ class Transaction(
     }
 
     companion object {
-        fun fromJson(jsonObject: JSONObject): Transaction {
+        fun fromJson(jsonObject: JSONObject, index: Int?): Transaction {
             return Transaction(
                 title = jsonObject.getString("title"),
                 amount = jsonObject.getDouble("amount").toFloat(),
                 type = jsonObject.getString("type"),
                 category = jsonObject.getString("category"),
-                date = jsonObject.getLong("date")
+                date = jsonObject.getLong("date"),
+                index = index
             )
         }
     }

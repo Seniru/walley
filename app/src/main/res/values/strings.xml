@@ -35,6 +35,8 @@
     <string name="color">Color</string>
     <string name="icon">Icon</string>
     <string name="update_budget">Update budget</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string-array name="transaction_types">
         <item>Expense</item>
         <item>Income</item>
