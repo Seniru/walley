@@ -1,10 +1,13 @@
 package com.seniru.walley.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -13,6 +16,11 @@ import com.seniru.walley.R
 import com.seniru.walley.models.Category
 import com.seniru.walley.utils.Colors
 import com.seniru.walley.utils.formatCurrency
+import org.w3c.dom.Text
+import androidx.core.view.get
+import com.seniru.walley.persistence.LiveDataEventBus
+import com.seniru.walley.persistence.SharedMemory
+import com.seniru.walley.persistence.TransactionDataStore
 
 class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
@@ -20,6 +28,10 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
     private val valueView: TextView
     private val iconView: TextView
     private val timeView: TextView
+    private val contextMenuIcon: TextView
+    private var index: Int? = null
+    private var value: Float = 0f
+    private var isIncome: Boolean = false
 
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_transaction, this, true)
@@ -28,6 +40,7 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         valueView = findViewById(R.id.value)
         iconView = findViewById(R.id.icon)
         timeView = findViewById(R.id.time)
+        contextMenuIcon = findViewById(R.id.contextMenuTextView)
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -47,6 +60,25 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             setTime(getString(R.styleable.walley_time))
 
         }
+
+        (context as Activity).registerForContextMenu(contextMenuIcon)
+        contextMenuIcon.setOnClickListener {
+            showContextMenuForChild(contextMenuIcon, 0f, 0f)
+        }
+        contextMenuIcon.setOnCreateContextMenuListener { menu, v, menuInfo ->
+            val inflater = MenuInflater(context)
+            inflater.inflate(R.menu.transaction_menu, menu)
+            // edit option
+            menu[0].setOnMenuItemClickListener {
+                return@setOnMenuItemClickListener true
+            }
+            // delete option
+            menu[1].setOnMenuItemClickListener {
+                deleteTransaction()
+                return@setOnMenuItemClickListener true
+            }
+        }
+
     }
 
     fun setTitle(title: String?) {
@@ -54,11 +86,12 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
     }
 
     fun setValue(value: Float) {
+        this.value = value
         valueView.text = formatCurrency(value, context)
-
     }
 
     fun setIsIncome(isIncome: Boolean) {
+        this.isIncome = isIncome
         valueView.setTextColor(
             ContextCompat.getColor(
                 context, if (isIncome) R.color.primary else R.color.error
@@ -84,6 +117,21 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
 
     fun setTime(time: String?) {
         timeView.text = time
+    }
+
+    fun setIndex(index: Int) {
+        this.index = index
+    }
+
+    fun deleteTransaction() {
+        if (index == null) return
+        val transactionStore = TransactionDataStore.getInstance(context)
+        val preferences = SharedMemory.getInstance(context)
+        transactionStore.delete(index!!)
+        preferences.setBalance(
+            preferences.getBalance() + (value) * (if (isIncome) -1 else 1)
+        )
+        LiveDataEventBus.sendEvent("refresh_transactions")
     }
 
 }

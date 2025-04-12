@@ -39,4 +39,6 @@
         <item>Expense</item>
         <item>Income</item>
     </string-array>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

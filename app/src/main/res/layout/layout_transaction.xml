@@ -48,12 +48,15 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/contextMenuTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fa_solid"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:text="\uf142"
                     android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/secondary_heading"
                     android:textStyle="bold" />
 
             </LinearLayout>

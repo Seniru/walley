@@ -38,16 +38,24 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
         save()
     }
 
+    override fun delete(index: Int) {
+        // failsafe: read everything if the array list is empty
+        // it possibly does not have the updated list when changing contexts
+        if (transactions.size == 0) transactions = readAll()
+        transactions.removeAt(index)
+        save()
+    }
+
     // internal storage functions
     override fun readAll(): ArrayList<Transaction> {
         try {
             appContext.openFileInput(fileName).bufferedReader().use { reader ->
                 val content = reader.readText()
-                Log.d("TransactionDateStore.readAll", "file content: $content")
+                Log.d("TransactionDateStore", "file content: $content")
 
                 val jsonArray = JSONArray(content)
                 return ArrayList(List(jsonArray.length()) { index ->
-                    Transaction.fromJson(jsonArray.getJSONObject(index))
+                    Transaction.fromJson(jsonArray.getJSONObject(index), index)
                 })
             }
         } catch (e: FileNotFoundException) {
@@ -87,7 +95,7 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
         try {
             appContext.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it?.write(jsonArray.toString().toByteArray())
-                Log.i("TransactionDateStore.save", "File saved")
+                Log.i("TransactionDateStore", "File saved")
 
             }
 

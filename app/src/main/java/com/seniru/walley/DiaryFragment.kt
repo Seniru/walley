@@ -84,6 +84,7 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
                 transactionView.setTime(formatTime(transaction.date))
                 transactionView.setIconColor(R.color.primary)
                 transactionView.setIsIncome(transaction.type == "income")
+                transaction.index?.let { transactionView.setIndex(it) }
                 categories.find { it.name == transaction.category }
                     ?.let { transactionView.setCategory(it) }
                 transaction.amount?.let { transactionView.setValue(it) }
