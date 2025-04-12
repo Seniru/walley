@@ -159,7 +159,7 @@ class CreateTransactionDialog(
         val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
             .reduceOrNull { total, amount -> total + amount } ?: 0f
 
-        val today = Calendar.getInstance().apply {
+        /*val today = Calendar.getInstance().apply {
             time = Date()
         }
         val startOfDay = today.apply {
@@ -173,8 +173,8 @@ class CreateTransactionDialog(
             set(Calendar.MINUTE, 59)
             set(Calendar.SECOND, 59)
         }.time
-        val todayTransactions = transactionStore.read(startOfDay, endOfDay)
-        if (todayTransactions.size == 1 && total >= monthlyBudget * 0.75) {
+        val todayTransactions = transactionStore.read(startOfDay, endOfDay)*/
+        if (total >= monthlyBudget * 0.75) {
             val message =
                 if (total > monthlyBudget)
                     "You went ${

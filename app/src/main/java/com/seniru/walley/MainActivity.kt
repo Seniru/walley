@@ -33,6 +33,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.formatCurrency
@@ -81,6 +83,16 @@ class MainActivity : AppCompatActivity() {
         initializeComponents()
         displayAvailableBalance()
         updateBudgetInformation()
+
+        lifecycleScope.launchWhenCreated {
+            LiveDataEventBus.events.collect { event ->
+                if (event == "refresh_transactions") {
+                    displayAvailableBalance()
+                    updateBudgetInformation()
+                }
+            }
+        }
+
     }
 
     private fun switchScreens(newScreen: Int) {
@@ -103,9 +115,7 @@ class MainActivity : AppCompatActivity() {
     private fun switchFragment(newScreen: Int) {
         val fragmentClass = screens[newScreen][1] as Class<*>
         val fragment = fragmentClass.newInstance() as Fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainframe, fragment)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.mainframe, fragment).commit()
     }
 
     private fun displayAvailableBalance() {
@@ -118,12 +128,11 @@ class MainActivity : AppCompatActivity() {
         val transactions = transactionDataStore.readLastMonth()
         val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
             .reduceOrNull { total, amount -> total + amount }
-        findViewById<TextView>(R.id.budgetLimitTextView).text =
-            getString(
-                R.string.budget_vs_expenses,
-                formatCurrency(total ?: 0f, this),
-                formatCurrency(monthlyBudget, this)
-            )
+        findViewById<TextView>(R.id.budgetLimitTextView).text = getString(
+            R.string.budget_vs_expenses,
+            formatCurrency(total ?: 0f, this),
+            formatCurrency(monthlyBudget, this)
+        )
 
         val percent = (total?.div(monthlyBudget))?.times(100)
         spendingProgress.max = monthlyBudget.toInt()
@@ -149,14 +158,12 @@ class MainActivity : AppCompatActivity() {
         transactionDataStore = TransactionDataStore.getInstance(this)
 
         WalleyNotificationManager.createNotificationChannel(this)
-        if (
-            preferences.getIsAllowingPushNotifications()
-            && !WalleyNotificationManager.checkPermissions(this)
-        )
-            WalleyNotificationManager.requestPermissions(this)
+        if (preferences.getIsAllowingPushNotifications() && !WalleyNotificationManager.checkPermissions(
+                this
+            )
+        ) WalleyNotificationManager.requestPermissions(this)
         if (preferences.getIsDailyReminderEnabled()) {
-            if (!Reminder.checkPermissions(this))
-                Reminder.requestRequiredPermissions(this)
+            if (!Reminder.checkPermissions(this)) Reminder.requestRequiredPermissions(this)
             Reminder.schedule(this)
         }
 
