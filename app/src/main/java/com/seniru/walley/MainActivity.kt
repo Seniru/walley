@@ -62,11 +62,7 @@ class MainActivity : AppCompatActivity() {
         addTransactionButton = findViewById(R.id.add_trans_button)
         spendingProgress = findViewById(R.id.spendingProgress)
         addTransactionButton.setOnClickListener {
-            val dialog = CreateTransactionDialog(this) {
-                val diaryFragment =
-                    supportFragmentManager.findFragmentByTag("DiaryFragment") as? DiaryFragment
-                diaryFragment?.displayTransactions()
-            }
+            val dialog = CreateTransactionDialog(this)
             dialog.show()
 
         }

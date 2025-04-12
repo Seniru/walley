@@ -18,10 +18,13 @@ import com.seniru.walley.utils.Colors
 import com.seniru.walley.utils.formatCurrency
 import org.w3c.dom.Text
 import androidx.core.view.get
+import com.seniru.walley.CreateTransactionDialog
+import com.seniru.walley.DiaryFragment
 import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val titleView: TextView
@@ -70,6 +73,7 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             inflater.inflate(R.menu.transaction_menu, menu)
             // edit option
             menu[0].setOnMenuItemClickListener {
+                displayEditTransactionDialog()
                 return@setOnMenuItemClickListener true
             }
             // delete option
@@ -132,6 +136,24 @@ class TransactionView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             preferences.getBalance() + (value) * (if (isIncome) -1 else 1)
         )
         LiveDataEventBus.sendEvent("refresh_transactions")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun displayEditTransactionDialog() {
+        if (index == null) return
+        val transactionStore = TransactionDataStore.getInstance(context)
+        val transaction = transactionStore.get(index!!)
+        val dialog = CreateTransactionDialog(
+            context,
+            true,
+            transaction.index,
+            transaction.title,
+            transaction.amount,
+            transaction.type,
+            transaction.category,
+            transaction.date
+        )
+        dialog.show()
     }
 
 }

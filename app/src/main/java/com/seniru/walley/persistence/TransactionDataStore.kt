@@ -38,6 +38,21 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
         save()
     }
 
+    override fun get(index: Int): Transaction {
+        // failsafe: read everything if the array list is empty
+        // it possibly does not have the updated list when changing contexts
+        if (transactions.size == 0) transactions = readAll()
+        return transactions.get(index)
+    }
+
+    override fun replace(index: Int, item: Transaction) {
+        // failsafe: read everything if the array list is empty
+        // it possibly does not have the updated list when changing contexts
+        if (transactions.size == 0) transactions = readAll()
+        transactions[index] = item
+        save()
+    }
+
     override fun delete(index: Int) {
         // failsafe: read everything if the array list is empty
         // it possibly does not have the updated list when changing contexts

@@ -1,12 +1,9 @@
 package com.seniru.walley
 
 import WalleyNotificationManager
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.graphics.toColor
 import androidx.core.view.setPadding
-import com.seniru.walley.models.Category
 import com.seniru.walley.models.Transaction
 import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
@@ -35,7 +29,14 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class CreateTransactionDialog(
-    context: Context, private val onTransactionAdded: () -> Unit
+    context: Context,
+    var isEditing: Boolean = false,
+    var index: Int? = null,
+    var title: String? = null,
+    var amount: Float? = null,
+    var type: String? = null,
+    var category: String? = null,
+    var date: Long? = null
 ) : AlertDialog(context) {
 
     private val transactionStore = TransactionDataStore.getInstance(context)
@@ -64,12 +65,22 @@ class CreateTransactionDialog(
         val typeSpinner = findViewById<Spinner>(R.id.typeSpinner)
         val categorySpinner = findViewById<Spinner>(R.id.categorySpinner)
         val dateView = findViewById<CalendarView>(R.id.calendar)
+        val heading = findViewById<TextView>(R.id.dialogHeading)
         val submitButton = findViewById<Button>(R.id.submitButton)
 
         if (categorySpinner != null) {
             setCategories(categorySpinner)
         }
 
+        if (isEditing) {
+            heading?.text = context.getString(R.string.edit_transaction)
+            submitButton?.text = context.getString(R.string.edit_transaction)
+            titleTextView?.text = title
+            amountTextView?.text = amount.toString()
+            typeSpinner?.setSelection(if (type == "expense") 0 else 1)
+        }
+
+        date?.let { dateView?.date = it }
         dateView?.setOnDateChangeListener { _, year, month, dayOfMonth ->
             dateView.date = Calendar.getInstance()
                 .apply { set(year, month, dayOfMonth) }
@@ -82,7 +93,8 @@ class CreateTransactionDialog(
                 amountTextView?.text.toString().toFloatOrNull(),
                 typeSpinner?.selectedItem.toString().lowercase(),
                 categorySpinner?.selectedItem.toString(),
-                dateView?.date!!
+                dateView?.date!!,
+                index
             )
 
             when (val validationResult = transaction.validate()) {
@@ -99,14 +111,23 @@ class CreateTransactionDialog(
                 ).show()
 
                 else -> {
-                    transactionStore.push(transaction)
-                    preferences.setBalance(
-                        preferences.getBalance()
-                                + (transaction.amount
-                            ?: 0f) * (if (transaction.type == "income") 1 else -1)
-                    )
-                    notifyIfOverBudget()
+                    if (isEditing) {
+                        if (index == null) return@setOnClickListener
+                        transactionStore.replace(index!!, transaction)
+                        preferences.setBalance(
+                            preferences.getBalance() + ((amount ?: 0f) - (transaction.amount
+                                ?: 0f)) * (if (transaction.type == "income") 1 else -1)
+                        )
+                    } else {
+                        transactionStore.push(transaction)
+                        preferences.setBalance(
+                            preferences.getBalance()
+                                    + (transaction.amount
+                                ?: 0f) * (if (transaction.type == "income") 1 else -1)
+                        )
+                    }
 
+                    notifyIfOverBudget()
                     dismiss()
                     LiveDataEventBus.sendEvent("refresh_transactions")
                 }
@@ -123,7 +144,11 @@ class CreateTransactionDialog(
         val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-        spinner.setSelection(0)
+        if (isEditing) {
+            spinner.setSelection(categories.indexOf(category))
+        } else {
+            spinner.setSelection(0)
+        }
 
     }
 
