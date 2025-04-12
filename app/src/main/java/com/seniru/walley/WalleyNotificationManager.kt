@@ -17,19 +17,19 @@ import com.seniru.walley.persistence.SharedMemory
 
 class WalleyNotificationManager {
     companion object {
-        var notificationId = 0
+        private var notificationId = 0
 
         fun createNotificationChannel(context: Context) {
             Log.i("WalleyNotificationManager", "createNotificationChannel")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val name = "walley"
                 val descriptionText = "Walley notifications"
-                val importance = android.app.NotificationManager.IMPORTANCE_DEFAULT
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
                 val channel = NotificationChannel("walley", name, importance).apply {
                     description = descriptionText
                 }
                 val notificationManager =
-                    context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.createNotificationChannel(channel)
             }
         }

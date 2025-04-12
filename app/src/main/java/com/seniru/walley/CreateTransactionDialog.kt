@@ -29,6 +29,7 @@ import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.ValidationResult
+import com.seniru.walley.utils.formatCurrency
 import java.util.Calendar
 import java.util.Date
 
@@ -100,7 +101,8 @@ class CreateTransactionDialog(
                 else -> {
                     transactionStore.push(transaction)
                     preferences.setBalance(
-                        preferences.getBalance() + (transaction.amount
+                        preferences.getBalance()
+                                + (transaction.amount
                             ?: 0f) * (if (transaction.type == "income") 1 else -1)
                     )
                     notifyIfOverBudget()
@@ -132,28 +134,36 @@ class CreateTransactionDialog(
         val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
             .reduceOrNull { total, amount -> total + amount } ?: 0f
 
-        val today = android.icu.util.Calendar.getInstance().apply {
+        val today = Calendar.getInstance().apply {
             time = Date()
         }
         val startOfDay = today.apply {
-            set(android.icu.util.Calendar.HOUR_OF_DAY, 0)
-            set(android.icu.util.Calendar.MINUTE, 0)
-            set(android.icu.util.Calendar.SECOND, 0)
-            set(android.icu.util.Calendar.MILLISECOND, 0)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }.time
         val endOfDay = today.apply {
-            set(android.icu.util.Calendar.HOUR_OF_DAY, 23)
-            set(android.icu.util.Calendar.MINUTE, 59)
-            set(android.icu.util.Calendar.SECOND, 59)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
         }.time
         val todayTransactions = transactionStore.read(startOfDay, endOfDay)
-
         if (todayTransactions.size == 1 && total >= monthlyBudget * 0.75) {
-            val currency = preferences.getCurrency().currencyCode
             val message =
                 if (total > monthlyBudget)
-                    "You went $currency${total - monthlyBudget} over your $currency$monthlyBudget budget."
-                else "You’re nearing your budget! Just $currency${monthlyBudget - total} remains out of $currency$monthlyBudget"
+                    "You went ${
+                        formatCurrency(
+                            total - monthlyBudget,
+                            context
+                        )
+                    } over your ${formatCurrency(monthlyBudget, context)} budget."
+                else "You’re nearing your budget! Just ${
+                    formatCurrency(
+                        monthlyBudget - total,
+                        context
+                    )
+                } remains out of ${formatCurrency(monthlyBudget, context)}"
 
             WalleyNotificationManager.createNotification(
                 context,

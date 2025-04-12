@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -21,11 +22,19 @@ import kotlin.enums.enumEntries
 class SettingsFragment : Fragment(R.layout.layout_settings) {
 
     private lateinit var preferences: SharedMemory
+    private lateinit var pushNotificationsSwitch: SwitchCompat
+    private lateinit var budgetLimitSwitch: SwitchCompat
+    private lateinit var dailyReminderSwitch: SwitchCompat
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         preferences = SharedMemory.getInstance(requireContext())
         super.onViewCreated(view, savedInstanceState)
+
+        pushNotificationsSwitch = view.findViewById(R.id.push_notification_switch)
+        budgetLimitSwitch = view.findViewById(R.id.budget_limit_switch)
+        dailyReminderSwitch = view.findViewById(R.id.daily_reminder_switch)
+
         val currencyList = Currency.getAvailableCurrencies()
             .map { getCurrencyDisplayName(it) }
 
@@ -54,25 +63,29 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
 
         }
 
-        view.findViewById<SwitchCompat>(R.id.push_notification_switch).apply {
+        pushNotificationsSwitch.apply {
             isChecked = preferences.getIsAllowingPushNotifications()
             setOnClickListener {
                 preferences.setIsAllowingPushNotifications(isChecked)
+                budgetLimitSwitch.isEnabled = isChecked
+                dailyReminderSwitch.isEnabled = isChecked
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
                     WalleyNotificationManager.requestPermissions(activity as Activity)
             }
         }
 
-        view.findViewById<SwitchCompat>(R.id.budget_limit_switch).apply {
+        budgetLimitSwitch.apply {
             isChecked = preferences.getIsSendingBudgetExceededAlert()
+            isEnabled = preferences.getIsAllowingPushNotifications()
             setOnClickListener {
                 preferences.setIsSendingBudgetExceededAlert(isChecked)
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
                     WalleyNotificationManager.requestPermissions(activity as Activity)            }
         }
 
-        view.findViewById<SwitchCompat>(R.id.daily_reminder_switch).apply {
+        dailyReminderSwitch.apply {
             isChecked = preferences.getIsDailyReminderEnabled()
+            isEnabled = preferences.getIsAllowingPushNotifications()
             setOnClickListener {
                 preferences.setIsDailyReminderEnabled(isChecked)
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
