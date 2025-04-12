@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -21,8 +22,11 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.seniru.walley.models.Category
 import com.seniru.walley.persistence.CategoryDataStore
+import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.formatCurrency
+import java.time.LocalDate
+import java.util.Date
 import kotlin.math.exp
 import kotlin.random.Random
 
@@ -78,24 +82,44 @@ class ReportFragment : Fragment(R.layout.layout_report) {
         pieChart?.invalidate()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawSpendingLineChart() {
+        val preferences = SharedMemory.getInstance(requireContext())
         val random = Random.Default
         val linechart = view?.findViewById<LineChart>(R.id.linechart)
         var values = ArrayList<Entry>()
-        var bal = 1000f
-        for (i in 1..30) {
-            bal += random.nextDouble(-100.0, 80.0).toFloat()
-            values.add(Entry(i.toFloat(), bal))
+        var bal = preferences.getBalance()
+
+        val now = LocalDate.now()
+        val transactions =
+            transactionDataStore.readLastMonth().apply { sortByDescending { it.date } }
+        for (i in now.month.maxLength() downTo 1) {
+            if (i > now.dayOfMonth) values.add(Entry(i.toFloat(), bal))
+            else if (i == now.dayOfMonth) values.add(Entry(i.toFloat(), bal))
+            else {
+                bal += transactions
+                    .filter { Date(it.date).date == i }
+                    .map { (it.amount ?: 0f) * (if (it.type == "income") -1 else 1) }
+                    .sum()
+                Log.i("jfiao", "$i $bal")
+
+                values.add(Entry(i.toFloat(), bal))
+            }
         }
 
-        linechart?.data = LineData(LineDataSet(values, "").apply {
-            color = "#FF6347".toColorInt()
-            fillColor = "#FF6347".toColorInt()
-            lineWidth = 3f
-            setDrawCircles(false)
-            setDrawFilled(true)
+        values.reverse()
+        Log.i("fji", values.toString())
 
-        }).apply {
+        linechart?.data = LineData(
+            LineDataSet(values, "").apply
+            {
+                color = "#FF6347".toColorInt()
+                fillColor = "#FF6347".toColorInt()
+                lineWidth = 3f
+                setDrawCircles(false)
+                setDrawFilled(true)
+
+            }).apply {
             setDrawValues(false)
         }
         linechart?.setDrawBorders(false)
