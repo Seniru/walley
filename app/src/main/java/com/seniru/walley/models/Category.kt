@@ -12,7 +12,8 @@ class Category(
     val name: String,
     val spendingLimit: Float?,
     val color: Color?,
-    val icon: String
+    val icon: String,
+    val index: Int? = null
 ) {
 
     fun validateName(): ValidationResult {
@@ -62,12 +63,13 @@ class Category(
 
     companion object {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun fromJson(jsonObject: JSONObject): Category {
+        fun fromJson(jsonObject: JSONObject, index: Int?): Category {
             return Category(
                 name = jsonObject.getString("name"),
                 spendingLimit = jsonObject.getDouble("limit").toFloat(),
                 color = Color.valueOf(jsonObject.getInt("color")),
-                icon = jsonObject.getString("icon")
+                icon = jsonObject.getString("icon"),
+                index = index
             )
         }
     }

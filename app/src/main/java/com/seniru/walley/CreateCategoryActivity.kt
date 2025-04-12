@@ -19,15 +19,20 @@ import androidx.core.graphics.toColor
 import androidx.core.view.children
 import androidx.gridlayout.widget.GridLayout
 import com.seniru.walley.models.Category
+import com.seniru.walley.models.Transaction
 import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
+import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.utils.ValidationResult
 import com.seniru.walley.utils.dpToPixels
+import org.w3c.dom.Text
 import java.security.AccessController.getContext
 
 
 class CreateCategoryActivity : AppCompatActivity() {
 
+    private lateinit var headingTextView: TextView
+    private lateinit var createButton: Button
     private lateinit var selectedColorView: FrameLayout
     private lateinit var selectedIconView: FrameLayout
     private lateinit var categoryNameTextView: TextView
@@ -63,9 +68,12 @@ class CreateCategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_new_category)
 
+        val editting = intent.getBooleanExtra("editting", false)
         categoryNameTextView = findViewById(R.id.categoryName)
         spendingLimitTextView = findViewById(R.id.spendingLimitTextView)
-        findViewById<Button>(R.id.createButton).setOnClickListener {
+        headingTextView = findViewById(R.id.headingTextView)
+        createButton = findViewById(R.id.createButton)
+        createButton.setOnClickListener {
             createCategory()
         }
 
@@ -75,10 +83,25 @@ class CreateCategoryActivity : AppCompatActivity() {
 
         val colorCodes = findViewById<LinearLayout>(R.id.colorContainer).children
 
-        selectedColorView =
-            colorCodes.first() as FrameLayout
 
+        if (editting) {
+            headingTextView.text = getString(R.string.edit_category)
+            createButton.text = getString(R.string.edit_category)
+            categoryNameTextView.text = intent.getStringExtra("name")
+            spendingLimitTextView.text = intent.getFloatExtra("maxValue", 0f).toString()
+        }
+
+        selectedColorView = colorCodes.first() as FrameLayout
+        val color = intent.getIntExtra("color", 0)
         for (colorCode in colorCodes) {
+
+            if (editting && (colorCode as FrameLayout).children.first().backgroundTintList?.defaultColor == color) {
+                selectedColorView.backgroundTintList =
+                    ColorStateList.valueOf(resources.getColor(R.color.background))
+                selectedColorView = colorCode
+                selectedColorView.backgroundTintList =
+                    ColorStateList.valueOf(resources.getColor(R.color.textPrimary))
+            }
             colorCode.setOnClickListener {
                 selectedColorView.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.background))
@@ -136,6 +159,16 @@ class CreateCategoryActivity : AppCompatActivity() {
 
         val iconFrames = gridView.children
         selectedIconView = iconFrames.first() as FrameLayout
+        if (editting) {
+            val icon = intent.getStringExtra("icon")
+            for (iconFrame in iconFrames) {
+                if (((iconFrame as FrameLayout).children.first() as TextView).text == icon) {
+                    selectedIconView = iconFrame
+                    break
+                }
+            }
+        }
+
         selectedIconView.backgroundTintList =
             ColorStateList.valueOf(resources.getColor(R.color.textPrimary))
 
@@ -153,19 +186,31 @@ class CreateCategoryActivity : AppCompatActivity() {
 
         when (val validationResult = category.validate()) {
             is ValidationResult.Empty -> Toast.makeText(
-                this,
-                validationResult.error,
-                Toast.LENGTH_SHORT
+                this, validationResult.error, Toast.LENGTH_SHORT
             ).show()
 
             is ValidationResult.Invalid -> Toast.makeText(
-                this,
-                validationResult.error,
-                Toast.LENGTH_SHORT
+                this, validationResult.error, Toast.LENGTH_SHORT
             ).show()
 
             else -> {
-                categoryDataStore.push(category)
+                if (intent.getBooleanExtra("editting", false)) {
+                    val newName = categoryNameTextView.text.toString()
+                    val oldName = intent.getStringExtra("name")
+                    if (newName != oldName) {
+                        val transactionStore = TransactionDataStore.getInstance(applicationContext)
+                        val transactions = transactionStore.readAll().map {
+                            if (it.category == oldName) {
+                                it.category = newName
+                            }
+                            it
+                        }
+                        transactionStore.set(transactions as ArrayList<Transaction>)
+                    }
+                    categoryDataStore.replace(intent.getIntExtra("index", 0), category)
+                } else {
+                    categoryDataStore.push(category)
+                }
                 LiveDataEventBus.sendEvent("refresh_categories")
                 finish()
             }

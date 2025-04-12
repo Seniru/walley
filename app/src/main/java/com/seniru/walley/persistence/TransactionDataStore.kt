@@ -79,6 +79,11 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
         }
     }
 
+    override fun set(newList: ArrayList<Transaction>) {
+        transactions = newList
+        save()
+    }
+
     fun read(fromDate: Date, toDate: Date): ArrayList<Transaction> {
         val allTransactions = readAll()
         return allTransactions.filter { it.date in fromDate.time..toDate.time } as ArrayList<Transaction>

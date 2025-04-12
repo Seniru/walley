@@ -73,7 +73,7 @@ class CategoryDataStore private constructor(context: Context) : DataStorable<Cat
 
                 val jsonArray = JSONArray(content)
                 return ArrayList(List(jsonArray.length()) { index ->
-                    Category.fromJson(jsonArray.getJSONObject(index))
+                    Category.fromJson(jsonArray.getJSONObject(index), index)
                 })
             }
         } catch (e: FileNotFoundException) {
@@ -81,6 +81,11 @@ class CategoryDataStore private constructor(context: Context) : DataStorable<Cat
             return ArrayList()
         }
 
+    }
+
+    override fun set(newList: ArrayList<Category>) {
+        categories = newList
+        save()
     }
 
     override fun save() {

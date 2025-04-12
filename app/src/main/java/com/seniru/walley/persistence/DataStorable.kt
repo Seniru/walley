@@ -6,5 +6,6 @@ interface DataStorable<E> {
     fun replace(index: Int, item: E)
     fun delete(index: Int)
     fun readAll(): ArrayList<E>
+    fun set(newList: ArrayList<E>)
     fun save()
 }

@@ -9,12 +9,12 @@ import java.time.LocalDate
 import java.time.ZoneId.systemDefault
 
 class Transaction(
-    val title: String,
-    val amount: Float?,
-    val type: String,
-    val category: String,
-    val date: Long,
-    val index: Int? = null
+    var title: String,
+    var amount: Float?,
+    var type: String,
+    var category: String,
+    var date: Long,
+    var index: Int? = null
 ) {
 
     fun validateTitle(): ValidationResult {
@@ -30,7 +30,7 @@ class Transaction(
     fun validateAmount(): ValidationResult {
         return if (amount == null) {
             ValidationResult.Empty("Amount cannot be empty")
-        } else if (amount < 0) {
+        } else if (amount!! < 0) {
             ValidationResult.Invalid("Amount cannot be negative")
         } else {
             ValidationResult.Valid

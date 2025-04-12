@@ -71,6 +71,7 @@ class CategoryFragment : Fragment(R.layout.layout_category) {
             category.color?.toArgb()?.let { categoryView.setIconColor(it) }
             categoryView.setSpending()
             categoryView.setSpendingVsTotal((total / monthTotal) * 100)
+            category.index?.let { categoryView.setIndex(it) }
             categoryList.addView(categoryView)
         }
     }

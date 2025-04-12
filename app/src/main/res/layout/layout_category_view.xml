@@ -58,13 +58,16 @@
                     android:textSize="@dimen/normal_text" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/contextMenuTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="0"
                     android:fontFamily="@font/fa_solid"
                     android:text="\uf142"
                     android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/secondary_heading"
                     android:textStyle="bold" />
 
             </LinearLayout>
