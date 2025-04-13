@@ -1,10 +1,12 @@
 package com.seniru.walley
 
 import android.app.Activity
+import android.content.Intent
 import android.icu.util.Currency
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.JsonReader
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -14,9 +16,13 @@ import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.seniru.walley.models.Category
+import com.seniru.walley.models.Transaction
 import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.SharedMemory
@@ -29,6 +35,7 @@ import kotlin.enums.enumEntries
 
 class SettingsFragment : Fragment(R.layout.layout_settings) {
 
+    private val OPEN_FILE_REQUEST_CODE = 1000
     private lateinit var preferences: SharedMemory
     private lateinit var pushNotificationsSwitch: SwitchCompat
     private lateinit var budgetLimitSwitch: SwitchCompat
@@ -43,6 +50,19 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
         budgetLimitSwitch = view.findViewById(R.id.budget_limit_switch)
         dailyReminderSwitch = view.findViewById(R.id.daily_reminder_switch)
 
+        displaySettings(view)
+        lifecycleScope.launchWhenCreated {
+            LiveDataEventBus.events.collect { event ->
+                if (event == "refresh_settings") {
+                    displaySettings(view)
+                }
+            }
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun displaySettings(view: View) {
         val currencyList = Currency.getAvailableCurrencies()
             .map { getCurrencyDisplayName(it) }
 
@@ -120,11 +140,20 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             exportData()
         }
 
+        view.findViewById<Button>(R.id.importDataButton).setOnClickListener {
+            importData()
+        }
+
         view.findViewById<Button>(R.id.deleteDataButton).setOnClickListener {
             clearData()
             LiveDataEventBus.sendEvent("refresh_transactions")
         }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OPEN_FILE_REQUEST_CODE) handleImport(data)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -186,7 +215,84 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
     }
 
     private fun importData() {
+        val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/json"
+        }
+        startActivityForResult(openFileIntent, OPEN_FILE_REQUEST_CODE)
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun handleImport(intent: Intent?) {
+        try {
+            if (intent?.data != null) {
+                context?.contentResolver?.openInputStream(intent.data!!)?.apply {
+                    val rawJson = bufferedReader().readText()
+                    Log.d("SettingsFragment", "Imported json: $rawJson")
+
+                    val json = JSONObject(rawJson)
+                    val preferencesJson = json.getJSONObject("preferences")
+                    val categoriesJson = json.getJSONArray("categories")
+                    val transactionsJson = json.getJSONArray("transactions")
+
+                    // import all preferences
+                    preferences.setBalance(preferencesJson.getDouble("balance").toFloat(), true)
+                    preferences.setMonthlyBudget(
+                        preferencesJson.getDouble("monthly_budget").toFloat(),
+                        true
+                    )
+                    preferences.setCurrency(preferencesJson.getString("currency"), true)
+                    preferences.setIsAllowingPushNotifications(
+                        preferencesJson.getBoolean("push_notifications"),
+                        true
+                    )
+                    preferences.setIsDailyReminderEnabled(
+                        preferencesJson.getBoolean("daily_reminder"),
+                        true
+                    )
+                    preferences.setIsSendingBudgetExceededAlert(
+                        preferencesJson.getBoolean("budget_alerts"),
+                        true
+                    )
+
+                    // import all categories
+                    val categories = arrayListOf<Category>()
+                    for (i in 0..<categoriesJson.length()) {
+                        categories.add(
+                            Category.fromJson(
+                                categoriesJson[i] as JSONObject,
+                                index = i
+                            )
+                        )
+                    }
+                    CategoryDataStore.getInstance(requireContext()).set(categories)
+
+                    // import all transactions
+                    val transactions = arrayListOf<Transaction>()
+                    for (i in 0..<transactionsJson.length()) {
+                        transactions.add(
+                            Transaction.fromJson(
+                                transactionsJson[i] as JSONObject,
+                                index = i
+                            )
+                        )
+                    }
+                    TransactionDataStore.getInstance(requireContext()).set(transactions)
+
+                    LiveDataEventBus.sendEvent("refresh_transactions")
+                    LiveDataEventBus.sendEvent("refresh_settings")
+                    close()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("SettingsFragment", e.toString())
+            Toast.makeText(
+                context,
+                "An error occurred while importing your data",
+                Toast.LENGTH_LONG
+            ).show()
+            clearData()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -194,15 +300,8 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
         preferences.clearAll()
         TransactionDataStore.getInstance(requireContext()).clearAll()
         CategoryDataStore.getInstance(requireContext()).clearAll()
-        pushNotificationsSwitch.isChecked = false
-        dailyReminderSwitch.apply {
-            isChecked = false
-            isEnabled = false
-        }
-        budgetLimitSwitch.apply {
-            isChecked = false
-            isEnabled = false
-        }
+        LiveDataEventBus.sendEvent("refresh_settings")
+        LiveDataEventBus.sendEvent("refresh_transactions")
         Toast.makeText(context, "Cleared all data", Toast.LENGTH_SHORT).show()
         Log.i("SettingsFragment", "clearData")
     }
