@@ -110,4 +110,9 @@ class SharedMemory private constructor(context: Context) {
         preferences.edit() { putFloat("balance", balance).apply() }
     }
 
+    fun clearAll() {
+        Log.i("SharedMemory", "clearAll")
+        preferences.edit(commit = true) { clear() }
+    }
+
 }

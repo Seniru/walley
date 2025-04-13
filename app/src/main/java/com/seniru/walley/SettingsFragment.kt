@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import com.seniru.walley.persistence.CategoryDataStore
+import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.SharedMemory
 import com.seniru.walley.persistence.TransactionDataStore
 import org.json.JSONArray
@@ -62,6 +63,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
                 // do not update if no changes were made to the previous state
                 if (currencyISO == preferences.getCurrency().currencyCode) return
                 preferences.setCurrency(currencyISO)
+                LiveDataEventBus.sendEvent("refresh_transactions")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -111,10 +113,16 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
         view.findViewById<Button>(R.id.update_budget_button).setOnClickListener {
             val budget = monthlyBudgetTextView.text.toString().toFloatOrNull()
             preferences.setMonthlyBudget(budget)
+            LiveDataEventBus.sendEvent("refresh_transactions")
         }
 
         view.findViewById<Button>(R.id.exportDataButton).setOnClickListener {
             exportData()
+        }
+
+        view.findViewById<Button>(R.id.deleteDataButton).setOnClickListener {
+            clearData()
+            LiveDataEventBus.sendEvent("refresh_transactions")
         }
 
     }
@@ -181,8 +189,22 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun clearData() {
-
+        preferences.clearAll()
+        TransactionDataStore.getInstance(requireContext()).clearAll()
+        CategoryDataStore.getInstance(requireContext()).clearAll()
+        pushNotificationsSwitch.isChecked = false
+        dailyReminderSwitch.apply {
+            isChecked = false
+            isEnabled = false
+        }
+        budgetLimitSwitch.apply {
+            isChecked = false
+            isEnabled = false
+        }
+        Toast.makeText(context, "Cleared all data", Toast.LENGTH_SHORT).show()
+        Log.i("SettingsFragment", "clearData")
     }
 
     private fun getCurrencyDisplayName(currency: Currency): String {
