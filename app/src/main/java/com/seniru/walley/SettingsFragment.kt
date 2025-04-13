@@ -160,7 +160,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
     private fun exportData() {
         val json = JSONObject()
 
-        val preferences = JSONObject().apply {
+        val prefsJson = JSONObject().apply {
             put("initialized", true)
             put("balance", preferences.getBalance())
             put("monthly_budget", preferences.getMonthlyBudget())
