@@ -4,6 +4,7 @@ import WalleyNotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -158,6 +159,7 @@ class CreateTransactionDialog(
         val transactions = transactionStore.readLastMonth()
         val total = transactions.filter { it.type == "expense" }.map { it.amount ?: 0.0f }
             .reduceOrNull { total, amount -> total + amount } ?: 0f
+        Log.d("CreateTransactionDialog", "monthlyBudget: $monthlyBudget, total: $total")
 
         /*val today = Calendar.getInstance().apply {
             time = Date()
@@ -174,7 +176,7 @@ class CreateTransactionDialog(
             set(Calendar.SECOND, 59)
         }.time
         val todayTransactions = transactionStore.read(startOfDay, endOfDay)*/
-        if (total >= monthlyBudget * 0.75) {
+        if (total >= monthlyBudget * 0.65) {
             val message =
                 if (total > monthlyBudget)
                     "You went ${
