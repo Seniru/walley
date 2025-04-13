@@ -110,9 +110,8 @@ class SharedMemory private constructor(context: Context) {
         Toast.makeText(appContext, "Preferred currency updated!", Toast.LENGTH_SHORT).show()
     }
 
-    fun setBalance(balance: Float, silenceNotifications: Boolean? = true) {
+    fun setBalance(balance: Float) {
         Log.i("SharedMemory", "setBalance: $balance")
-        if (silenceNotifications == true) return
         preferences.edit() { putFloat("balance", balance).apply() }
     }
 

@@ -236,7 +236,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
                     val transactionsJson = json.getJSONArray("transactions")
 
                     // import all preferences
-                    preferences.setBalance(preferencesJson.getDouble("balance").toFloat(), true)
+                    preferences.setBalance(preferencesJson.getDouble("balance").toFloat())
                     preferences.setMonthlyBudget(
                         preferencesJson.getDouble("monthly_budget").toFloat(),
                         true
