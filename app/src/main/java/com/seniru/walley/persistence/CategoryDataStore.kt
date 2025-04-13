@@ -103,10 +103,11 @@ class CategoryDataStore private constructor(context: Context) : DataStorable<Cat
         }
     }
 
-    fun clearAll() {
+    override fun clearAll() {
         try {
             appContext.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it?.write("[]".toByteArray())
+                categories = arrayListOf()
             }
         } catch (e: IOException) {
             e.printStackTrace()

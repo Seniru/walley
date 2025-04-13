@@ -48,9 +48,10 @@ class SharedMemory private constructor(context: Context) {
         return preferences.getFloat("balance", 0f)
     }
 
-    fun setIsAllowingPushNotifications(enabled: Boolean) {
+    fun setIsAllowingPushNotifications(enabled: Boolean, silenceNotifications: Boolean? = true) {
         Log.i("SharedMemory", "setNotificationPreferences: $enabled")
         preferences.edit() { putBoolean("push_notifications_enabled", enabled).apply() }
+        if (silenceNotifications == true) return
         Toast.makeText(
             appContext,
             "Push notifications ${if (enabled) "enabled" else "disabled"}!",
@@ -58,9 +59,10 @@ class SharedMemory private constructor(context: Context) {
         ).show()
     }
 
-    fun setIsSendingBudgetExceededAlert(enabled: Boolean) {
+    fun setIsSendingBudgetExceededAlert(enabled: Boolean, silenceNotifications: Boolean? = true) {
         Log.i("SharedMemory", "setNotificationPreferences: $enabled")
         preferences.edit() { putBoolean("budget_limit_alerts_enabled", enabled).apply() }
+        if (silenceNotifications == true) return
         Toast.makeText(
             appContext,
             "Budget exceed alerts ${if (enabled) "enabled" else "disabled"}!",
@@ -68,9 +70,10 @@ class SharedMemory private constructor(context: Context) {
         ).show()
     }
 
-    fun setIsDailyReminderEnabled(enabled: Boolean) {
+    fun setIsDailyReminderEnabled(enabled: Boolean, silenceNotifications: Boolean? = true) {
         Log.i("SharedMemory", "setNotificationPreferences: $enabled")
         preferences.edit() { putBoolean("daily_reminder_enabled", enabled).apply() }
+        if (silenceNotifications == true) return
         Toast.makeText(
             appContext,
             "${if (enabled) "Enabled" else "Disabled"} daily reminders!",
@@ -78,7 +81,7 @@ class SharedMemory private constructor(context: Context) {
         ).show()
     }
 
-    fun setMonthlyBudget(budget: Float?) {
+    fun setMonthlyBudget(budget: Float?, silenceNotifications: Boolean? = true) {
         Log.i("SharedMemory", "setNotificationPreferences: $budget")
         val validation =
             if (budget == null) ValidationResult.Empty("Please set a value to budget")
@@ -94,20 +97,27 @@ class SharedMemory private constructor(context: Context) {
 
             is ValidationResult.Valid -> {
                 preferences.edit() { putFloat("monthly_budget", budget!!).apply() }
+                if (silenceNotifications == true) return
                 Toast.makeText(appContext, "Monthly budget updated!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun setCurrency(currencyISO: String) {
+    fun setCurrency(currencyISO: String, silenceNotifications: Boolean? = true) {
         Log.i("SharedMemory", "setCurrency: $currencyISO")
         preferences.edit() { putString("currency", currencyISO).apply() }
+        if (silenceNotifications == true) return
         Toast.makeText(appContext, "Preferred currency updated!", Toast.LENGTH_SHORT).show()
     }
 
     fun setBalance(balance: Float) {
         Log.i("SharedMemory", "setBalance: $balance")
         preferences.edit() { putFloat("balance", balance).apply() }
+    }
+
+    fun clearAll() {
+        Log.i("SharedMemory", "clearAll")
+        preferences.edit(commit = true) { clear() }
     }
 
 }

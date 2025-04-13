@@ -79,6 +79,17 @@ class TransactionDataStore private constructor(context: Context) : DataStorable<
         }
     }
 
+    override fun clearAll() {
+        try {
+            appContext.openFileOutput(fileName, Context.MODE_PRIVATE).use {
+                it?.write("[]".toByteArray())
+                transactions = arrayListOf()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
     override fun set(newList: ArrayList<Transaction>) {
         transactions = newList
         save()
