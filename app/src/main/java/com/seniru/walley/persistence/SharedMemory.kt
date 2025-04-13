@@ -35,6 +35,10 @@ class SharedMemory private constructor(context: Context) {
         return preferences.getBoolean("daily_reminder_enabled", false)
     }
 
+    fun getIsInitialized(): Boolean {
+        return preferences.getBoolean("initialized", false)
+    }
+
     fun getMonthlyBudget(): Float {
         return preferences.getFloat("monthly_budget", 0f)
     }
@@ -79,6 +83,11 @@ class SharedMemory private constructor(context: Context) {
             "${if (enabled) "Enabled" else "Disabled"} daily reminders!",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    fun setIsInitialized(initialized: Boolean) {
+        Log.i("ShardMemory", "setIsInitialized: $initialized")
+        preferences.edit() { putBoolean("initialized", initialized).apply() }
     }
 
     fun setMonthlyBudget(budget: Float?, silenceNotifications: Boolean? = true) {

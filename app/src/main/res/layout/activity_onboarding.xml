@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="App Logo"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/welcome"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/primary_heading"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/onboarding_desc"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/normal_text" />
+
+    <Button
+        android:id="@+id/startFreshBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/accent"
+        android:text="@string/get_started"
+        android:textColor="@color/background"
+        android:textSize="@dimen/normal_text"
+        app:cornerRadius="@dimen/button_radius" />
+
+    <Button
+        android:id="@+id/restoreBackupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/accent"
+        android:text="@string/import_data"
+        android:textColor="@color/background"
+        android:textSize="@dimen/normal_text"
+        app:cornerRadius="@dimen/button_radius" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/backup_later"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/small_text" />
+</LinearLayout>
