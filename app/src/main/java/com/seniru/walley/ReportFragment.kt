@@ -64,15 +64,18 @@ class ReportFragment : Fragment(R.layout.layout_report) {
             Category("Other", 0f, resources.getColor(R.color.textSecondary).toColor(), "")
         )
 
+        val colors = arrayListOf<Int>()
         val entries = transactions
             .filter { it.type == "expense" }
             .groupBy { it.category }
             .mapValues { entry -> entry.value.sumOf { it.amount?.toDouble() ?: 0.0 } }
-            .map { entry -> PieEntry(entry.value.toFloat(), entry.key) }
-
+            .map { entry ->
+                colors.add(categories.find { it.name == entry.key }?.color?.toArgb() ?: R.color.accent)
+                PieEntry(entry.value.toFloat(), entry.key)
+            }
 
         pieChart?.data = PieData(PieDataSet(entries, "").apply {
-            colors = categories.map { it.color?.toArgb() ?: R.color.accent }
+            setColors(colors)
             valueTextColor = Color.WHITE
             valueTextSize = 12f
         })
@@ -101,14 +104,12 @@ class ReportFragment : Fragment(R.layout.layout_report) {
                     .filter { Date(it.date).date == i }
                     .map { (it.amount ?: 0f) * (if (it.type == "income") -1 else 1) }
                     .sum()
-                Log.i("jfiao", "$i $bal")
 
                 values.add(Entry(i.toFloat(), bal))
             }
         }
 
         values.reverse()
-        Log.i("fji", values.toString())
 
         linechart?.data = LineData(
             LineDataSet(values, "").apply

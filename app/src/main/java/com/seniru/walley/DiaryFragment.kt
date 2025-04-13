@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.marginTop
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.seniru.walley.models.Transaction
@@ -17,6 +19,7 @@ import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.LiveDataEventBus
 import com.seniru.walley.persistence.TransactionDataStore
 import com.seniru.walley.ui.TransactionView
+import com.seniru.walley.utils.dpToPixels
 import com.seniru.walley.utils.formatTime
 import java.util.Date
 import java.util.Locale
@@ -32,7 +35,7 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
         time = Date()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         transactionStore = TransactionDataStore.getInstance(requireContext())
@@ -60,7 +63,7 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun displayTransactions() {
         val startOfDay = displayingDate.apply {
             set(Calendar.HOUR_OF_DAY, 0)
@@ -76,6 +79,17 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
         val transactions = transactionStore.read(startOfDay, endOfDay)
         val categories = categoryStore.readAll()
         itemsContainer.removeAllViews()
+
+        if (transactions.size == 0) {
+
+            itemsContainer.addView(TextView(context).apply {
+                text = resources.getString(R.string.no_transactions)
+                textSize = 14f
+                setTextColor(resources.getColor(R.color.textSecondary))
+                setPadding(15, 15, 0, 0)
+            })
+            return
+        }
         for (transaction in transactions) {
             TransactionView(requireContext(), null).apply {
                 val transactionView = TransactionView(requireContext(), null)
@@ -93,7 +107,7 @@ class DiaryFragment : Fragment(R.layout.layout_diary) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun changeDateBy(amount: Int) {
         displayingDate.add(Calendar.DAY_OF_MONTH, amount)
 

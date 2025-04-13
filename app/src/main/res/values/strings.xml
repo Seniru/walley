@@ -43,4 +43,5 @@
     </string-array>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="no_transactions">No transactions to display</string>
 </resources>

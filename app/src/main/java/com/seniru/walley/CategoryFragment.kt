@@ -54,8 +54,9 @@ class CategoryFragment : Fragment(R.layout.layout_category) {
         val transactions = transactionStore.readLastMonth()
 
         val monthTotal = transactions
+            .filter { it.type == "expense" }
             .map { it.amount ?: 0.0f }
-            .reduceOrNull { total, amount -> total + amount } ?: 1f
+            .sum()
 
         categoryList.removeAllViews()
         for (category in categories) {
@@ -64,7 +65,7 @@ class CategoryFragment : Fragment(R.layout.layout_category) {
             val total = transactions
                 .filter { it.category == category.name && it.type == "expense" }
                 .map { it.amount ?: 0.0f }
-                .reduceOrNull { total, amount -> total + amount } ?: 0f
+                .sum()
             categoryView.setValue(total)
             categoryView.setMaxValue(category.spendingLimit!!)
             categoryView.setIcon(category.icon)
