@@ -257,7 +257,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
 
                     // import all categories
                     val categories = arrayListOf<Category>()
-                    for (i in 0..<categoriesJson.length()) {
+                    for (i in 0 until categoriesJson.length()) {
                         categories.add(
                             Category.fromJson(
                                 categoriesJson[i] as JSONObject,
@@ -269,7 +269,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
 
                     // import all transactions
                     val transactions = arrayListOf<Transaction>()
-                    for (i in 0..<transactionsJson.length()) {
+                    for (i in 0 until transactionsJson.length()) {
                         transactions.add(
                             Transaction.fromJson(
                                 transactionsJson[i] as JSONObject,
