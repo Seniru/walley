@@ -169,7 +169,7 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             put("budget_alerts", preferences.getIsSendingBudgetExceededAlert())
             put("daily_reminder", preferences.getIsDailyReminderEnabled())
         }
-        json.put("preferences", preferences)
+        json.put("preferences", prefsJson)
 
         val categoryStore = CategoryDataStore.getInstance(requireContext())
         val categories = categoryStore.readAll()
