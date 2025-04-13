@@ -4,6 +4,7 @@ import android.app.Activity
 import android.icu.util.Currency
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -16,7 +17,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import com.seniru.walley.persistence.CategoryDataStore
 import com.seniru.walley.persistence.SharedMemory
+import com.seniru.walley.persistence.TransactionDataStore
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 import kotlin.enums.enumEntries
 
 class SettingsFragment : Fragment(R.layout.layout_settings) {
@@ -80,7 +87,8 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             setOnClickListener {
                 preferences.setIsSendingBudgetExceededAlert(isChecked)
                 if (isChecked && !WalleyNotificationManager.checkPermissions(requireContext()))
-                    WalleyNotificationManager.requestPermissions(activity as Activity)            }
+                    WalleyNotificationManager.requestPermissions(activity as Activity)
+            }
         }
 
         dailyReminderSwitch.apply {
@@ -104,6 +112,76 @@ class SettingsFragment : Fragment(R.layout.layout_settings) {
             val budget = monthlyBudgetTextView.text.toString().toFloatOrNull()
             preferences.setMonthlyBudget(budget)
         }
+
+        view.findViewById<Button>(R.id.exportDataButton).setOnClickListener {
+            exportData()
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun exportData() {
+        val json = JSONObject()
+
+        val preferences = JSONObject().apply {
+            put("initialized", true)
+            put("balance", preferences.getBalance())
+            put("monthly_budget", preferences.getMonthlyBudget())
+            put("currency", preferences.getCurrency().currencyCode)
+            put("push_notifications", preferences.getIsAllowingPushNotifications())
+            put("budget_alerts", preferences.getIsSendingBudgetExceededAlert())
+            put("daily_reminder", preferences.getIsDailyReminderEnabled())
+        }
+        json.put("preferences", preferences)
+
+        val categoryStore = CategoryDataStore.getInstance(requireContext())
+        val categories = categoryStore.readAll()
+        val categoriesJson = JSONArray()
+        for (category in categories) {
+            categoriesJson.put(category.toJson())
+        }
+        json.put("categories", categoriesJson)
+
+        val transactionsStore = TransactionDataStore.getInstance(requireContext())
+        val transactions = transactionsStore.readAll()
+        val transactionsJson = JSONArray()
+        for (transaction in transactions) {
+            transactionsJson.put(transaction.toJson())
+        }
+        json.put("transactions", transactionsJson)
+
+        Log.i("SettingsFragment", "Exporting data: ${json}")
+        // save the file in Downloads
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "walley_exported.json"
+        )
+
+        try {
+            FileOutputStream(file).use { out ->
+                out.write(json.toString().toByteArray())
+                Toast.makeText(
+                    context,
+                    "Exported to Downloads/walley_exported.json",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            Log.i("SettingsFragment", "Exported data")
+        } catch (e: Exception) {
+            Toast.makeText(
+                context,
+                "Something unexpected happened while exporting your data",
+                Toast.LENGTH_LONG
+            ).show()
+            Log.e("SettingsFragment", e.toString())
+        }
+    }
+
+    private fun importData() {
+
+    }
+
+    private fun clearData() {
 
     }
 

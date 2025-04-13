@@ -20,7 +20,7 @@
     <string name="send_notifications">Allow push notifications</string>
     <string name="budget_limit_alerts">Send alerts when budget limit is exceeded</string>
     <string name="daily_reminders">Daily reminders</string>
-    <string name="backups">Backups</string>
+    <string name="data">Data</string>
     <string name="export_data">Export my data</string>
     <string name="import_data">Import my data with a file</string>
     <string name="add_transaction">Add transaction</string>
@@ -44,4 +44,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="no_transactions">No transactions to display</string>
+    <string name="delete_data">Delete all my data</string>
 </resources>
