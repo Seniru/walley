@@ -45,4 +45,8 @@
     <string name="delete">Delete</string>
     <string name="no_transactions">No transactions to display</string>
     <string name="delete_data">Delete all my data</string>
+    <string name="welcome">Welcome to Walley</string>
+    <string name="onboarding_desc">Track your expenses easily and stay on top of your finances.</string>
+    <string name="backup_later">You can import data later from settings.</string>
+    <string name="get_started">Get started</string>
 </resources>

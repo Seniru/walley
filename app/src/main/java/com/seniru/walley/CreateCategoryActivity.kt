@@ -47,7 +47,7 @@ class CreateCategoryActivity : AppCompatActivity() {
         "\uF236", "\uf0f8", "\uF015", "\uf51d", "\uF084", "\uF2CD",
         "\uF562", "\uf678", "\uf67f", "\uF07A", "\uF0A7", "\uF291",
         "\uf030", "\uF217", "\uF07B", "\uF2B9", "\uF19C", "\uf06b",
-        "\uf553", "\uF291", "\uF29C", "\uF54F", "\uf09d", "\uF0C0",
+        "\uf553", "\uf86d", "\uF29C", "\uF54F", "\uf09d", "\uF0C0",
         "\uf091", "\uf79c", "\uf3a5", "\uf0d6", "\uf555", "\uf81d",
         "\uf4c0", "\uf4d3", "\uf24e", "\uF183", "\uF5B0", "\uF8FF",
         "\uF0F4", "\uF0A1", "\uF52F", "\uF02D", "\uF5B6", "\uf001",
