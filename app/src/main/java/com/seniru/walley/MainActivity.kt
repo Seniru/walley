@@ -60,15 +60,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+        initializeComponents()
         mainFrame = findViewById(R.id.mainframe)
         addTransactionButton = findViewById(R.id.add_trans_button)
         spendingProgress = findViewById(R.id.spendingProgress)
         addTransactionButton.setOnClickListener {
             val dialog = CreateTransactionDialog(this)
             dialog.show()
-
         }
-
 
         for (i in screens.indices) {
             val screen = screens[i]
@@ -80,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchScreens(0)
-        initializeComponents()
         displayAvailableBalance()
         updateBudgetInformation()
 
@@ -158,6 +156,12 @@ class MainActivity : AppCompatActivity() {
         transactionDataStore = TransactionDataStore.getInstance(this)
 
         WalleyNotificationManager.createNotificationChannel(this)
+
+        if (!preferences.getIsInitialized()) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            return
+        }
+
         if (preferences.getIsAllowingPushNotifications() && !WalleyNotificationManager.checkPermissions(
                 this
             )

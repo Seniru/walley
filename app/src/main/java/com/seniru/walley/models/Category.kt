@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
 import androidx.core.graphics.toColorInt
+import androidx.core.graphics.toColorLong
 import com.seniru.walley.utils.ValidationResult
 import org.json.JSONObject
 
@@ -62,6 +63,20 @@ class Category(
     }
 
     companion object {
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        val defaults = arrayListOf(
+            Category("Health", 0f, (0xFF4500 or (0xFF shl 24)).toColor(), "\uf0fa", 5),
+            Category("Food", 0f, (0xFFA500 or (0xFF shl 24)).toColor(), "\uf2e7", 1),
+            Category("Utilities", 0f, (0xFFFF00 or (0xFF shl 24)).toColor(), "\uf084", 4),
+            Category("Transport", 0f, (0xADFF2F or (0xFF shl 24)).toColor(), "\uf018", 0),
+            Category("Groceries", 0f, (0x00FF7F or (0xFF shl 24)).toColor(), "\uf291", 3),
+            Category("Education", 0f, (0x1E90FF or (0xFF shl 24)).toColor(), "\uf19d", 6),
+            Category("Entertainment", 0f, (0x9932CC or (0xFF shl 24)).toColor(), "\uf630", 2),
+            Category("Other", 0f, (0xFF1493 or (0xFF shl 24)).toColor(), "\uf86d", 7),
+            Category("Income", 0f, (0x00FF00 or (0xFF shl 24)).toColor(), "\uf4c0", 8),
+        )
+
         @RequiresApi(Build.VERSION_CODES.O)
         fun fromJson(jsonObject: JSONObject, index: Int?): Category {
             return Category(

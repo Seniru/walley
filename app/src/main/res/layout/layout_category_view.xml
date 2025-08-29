@@ -20,7 +20,7 @@
             android:fontFamily="@font/fa_solid"
             android:gravity="center"
             android:padding="10dp"
-            android:text="\ue4c6"
+            android:text="\uf86d"
             android:textSize="32sp" />
 
         <LinearLayout
